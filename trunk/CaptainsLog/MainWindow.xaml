@@ -1,0 +1,33 @@
+﻿<Window x:Class="CaptainsLog.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Captain's Log" Height="350" Width="525" xmlns:my="clr-namespace:CaptainsLog" AllowDrop="True" Drop="FileDropped" Background="{StaticResource defaultGradient}" Icon="/LogViewer;component/logomat-icon.ico">
+    <Window.CommandBindings>
+        <CommandBinding Command="ApplicationCommands.Open"
+                  Executed="OpenCmdExecuted"
+                  CanExecute="OpenCmdCanExecute"/>
+    </Window.CommandBindings>
+
+    <Window.Resources>
+        
+        <DataTemplate x:Key="RecentFilesItem">
+            <TextBlock>
+                <Hyperlink Click="OpenFile" Command="ApplicationCommands.Open" CommandParameter="{Binding}">
+                    <TextBlock Text="{Binding}" />
+                </Hyperlink>
+            </TextBlock>
+        </DataTemplate>
+    </Window.Resources>
+    
+    <Grid Margin="6" >
+        <Grid.RowDefinitions>
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <TabControl Grid.Row="0" HorizontalAlignment="Stretch" Name="mainTab" VerticalAlignment="Stretch">
+            <TabItem Header="Welcome" HeaderTemplate="{StaticResource closableTabTemplate}" ButtonBase.Click="CloseTab">
+                <ListBox ItemsSource="{Binding Source={StaticResource Settings}, Path=RecentFiles}" ItemTemplate="{StaticResource RecentFilesItem}" BorderBrush="{x:Null}"></ListBox>
+            </TabItem>
+        </TabControl>
+        
+    </Grid>
+</Window>
