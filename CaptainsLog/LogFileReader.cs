@@ -5,12 +5,13 @@ using System.Text;
 using System.Xml;
 using System.IO;
 using System.Collections;
+using System.Collections.ObjectModel;
 
 namespace CaptainsLog
 {
   public class LogFileReader
   {
-    public SortedSet<LogEvent> Read(string fileName)
+    public ICollection<LogEvent> Read(string fileName)
     {
       string fileContents = "";
       using (StreamReader sr = new StreamReader(File.Open(fileName, FileMode.OpenOrCreate, FileAccess.Read, FileShare.ReadWrite)))
@@ -22,7 +23,7 @@ namespace CaptainsLog
       var document = new XmlDocument();
       document.LoadXml(xmlString);
       var events = document.GetElementsByTagName("log4j:event");
-      var logEvents = new SortedSet<LogEvent>(new LogEventComparer());
+      var logEvents = new List<LogEvent>();
       foreach (XmlNode eventNode in events)
       {
         var logEvent = new LogEvent();

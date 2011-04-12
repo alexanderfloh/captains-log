@@ -12,58 +12,57 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace CaptainsLog
-{
+namespace CaptainsLog {
   /// <summary>
   /// Interaction logic for MainWindow.xaml
   /// </summary>
-  public partial class MainWindow : Window
-  {
+  public partial class MainWindow : Window {
     private readonly List<LogFileMonitor> _logFileMonitors = new List<LogFileMonitor>();
 
-    public MainWindow()
-    {
+    public MainWindow() {
       InitializeComponent();
     }
 
-    private void FileDropped(object sender, DragEventArgs e)
-    {
+    private void OpenCmdExecuted(object target, ExecutedRoutedEventArgs e) {
+      LoadFile((string)e.Parameter);
+    }
+
+    private void OpenCmdCanExecute(object sender, CanExecuteRoutedEventArgs e) {
+      e.CanExecute = true;
+    }
+
+    private void FileDropped(object sender, DragEventArgs e) {
       this.Cursor = Cursors.Wait;
+      try {
+        string[] droppedFilePaths = e.Data.GetData(DataFormats.FileDrop, true) as string[];
+        if (droppedFilePaths != null) {
+          foreach (string droppedFilePath in droppedFilePaths) {
+            if (System.IO.File.Exists(droppedFilePath)) {
+              LoadFile(droppedFilePath);
 
-      string[] droppedFilePaths = e.Data.GetData(DataFormats.FileDrop, true) as string[];
+              var recentFiles = Properties.Settings.Default.RecentFiles;
 
-      foreach (string droppedFilePath in droppedFilePaths)
-      {
-        LoadFile(droppedFilePath);
-        
-        if(Properties.Settings.Default.RecentFiles == null) {
-          Properties.Settings.Default.RecentFiles = new System.Collections.Specialized.StringCollection();
-        }  
-        Properties.Settings.Default.RecentFiles.Add(droppedFilePath);
+              if (recentFiles == null) {
+                recentFiles = new System.Collections.Specialized.StringCollection();
+              }
+
+              while (recentFiles.Contains(droppedFilePath)) {
+                recentFiles.Remove(droppedFilePath);
+              }
+              recentFiles.Add(droppedFilePath);
+            }
+            Properties.Settings.Default.Save();
+          }
+        }
       }
-      Properties.Settings.Default.Save();
-      this.Cursor = Cursors.Arrow;
-    }
-
-    private void CloseTab(object sender, RoutedEventArgs e)
-    {
-      var tabItem = e.Source as TabItem;
-      if (tabItem != null)
-      {
-        var tabControl = tabItem.Parent as TabControl;
-        tabControl.Items.Remove(tabItem);
+      finally {
+        this.Cursor = Cursors.Arrow;
       }
-    }
-
-    private void OpenFile(object sender, RoutedEventArgs e)
-    {
-      
     }
 
     private void LoadFile(string fileName) {
-      var logFileMonitor = new LogFileMonitor(fileName);
       var logViewer = new LogViewerControl();
-      logViewer.DataContext = logFileMonitor.LogEvents;
+      var logFileMonitor = new LogFileMonitor(fileName, logViewer);
 
       var tabItem = new TabItem();
       tabItem.HeaderTemplate = (DataTemplate)App.Current.Resources["closableTabTemplate"];
@@ -78,18 +77,18 @@ namespace CaptainsLog
       _logFileMonitors.Add(logFileMonitor);
     }
 
-    private void OpenCmdExecuted(object target, ExecutedRoutedEventArgs e)
-    {
-      //String command, targetobj;
-      //command = ((RoutedCommand)e.Command).Name;
-      //targetobj = ((FrameworkElement)target).Name;
-      LoadFile((string)e.Parameter);
-      //MessageBox.Show("The " + command + " command has been invoked on target object " + targetobj);
-    }
-
-    private void OpenCmdCanExecute(object sender, CanExecuteRoutedEventArgs e)
-    {
-      e.CanExecute = true;
+    private void CloseTab(object sender, RoutedEventArgs e) {
+      var tabItem = e.Source as TabItem;
+      if (tabItem != null) {
+        var tabControl = tabItem.Parent as TabControl;
+        tabControl.Items.Remove(tabItem);
+        LogViewerControl logViewer = tabItem.Content as LogViewerControl;
+        if (logViewer != null) {
+          // TODO: it's a bit hack-ish to use the tooltip to decide if the elemnt should be removed
+          _logFileMonitors.Where((monitor) => monitor.FileName == (string)tabItem.ToolTip).ToList().ForEach((monitor) => monitor.Dispose());
+          _logFileMonitors.RemoveAll((monitor) => monitor.FileName == (string)tabItem.ToolTip);
+        }
+      }
     }
 
     public void Dispose() {
