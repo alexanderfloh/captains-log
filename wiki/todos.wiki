@@ -1,6 +1,6 @@
-= ToDos =
+=ToDos=
 
-  # [done] Automatic reloading when files change. 
+  # *`[ done `]* Automatic reloading when files change. 
   # Display "Throwable" contents of log file.
   # a way to Filter loggers
   # a way to display only messages >= a certain level
