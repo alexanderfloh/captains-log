@@ -28,7 +28,10 @@
         <TabControl Grid.Row="0" HorizontalAlignment="Stretch" Name="mainTab" VerticalAlignment="Stretch">
             <TabItem Header="Welcome" HeaderTemplate="{StaticResource closableTabTemplate}" ButtonBase.Click="CloseTab" Name="welcomeTab">
                 <GroupBox Header="Recent Files">
-                    <ListBox ItemsSource="{Binding Source={StaticResource Settings}, Path=RecentFiles}" ItemTemplate="{StaticResource RecentFilesItem}" BorderBrush="{x:Null}" Name="recentFiles" Background="{x:Null}"></ListBox>
+                    <Grid>
+                        <ListBox ItemsSource="{Binding Source={StaticResource Settings}, Path=RecentFiles}" ItemTemplate="{StaticResource RecentFilesItem}" BorderBrush="{x:Null}" Name="recentFiles" Background="{x:Null}" Panel.ZIndex="1"></ListBox>
+                        <Image Source="/CaptainsLog;component/Images/logviewer-vignette.png" HorizontalAlignment="Right" VerticalAlignment="Bottom" MaxWidth="128" MaxHeight="128" />
+                    </Grid>
                 </GroupBox>
             </TabItem>
         </TabControl>

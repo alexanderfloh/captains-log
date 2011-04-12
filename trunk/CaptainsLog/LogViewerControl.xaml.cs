@@ -38,12 +38,12 @@ namespace CaptainsLog
 
     private void UpdateOutline() {
       Outline.Children.Clear();
-      string searchText = Search.Text;
+      string searchText = Search.Text.ToUpperInvariant();
 
       if (searchText.Length > 0)
       {
-        SortedSet<LogEvent> events = (SortedSet<LogEvent>)DataContext;
-        var matchingEntries = events.Select((logEvent, index) => new { LogEvent = logEvent, Index = index }).Where((elem) => elem.LogEvent.Message.Contains(searchText));
+        ICollection<LogEvent> events = (ICollection<LogEvent>)DataContext;
+        var matchingEntries = events.Select((logEvent, index) => new { LogEvent = logEvent, Index = index }).Where((elem) => elem.LogEvent.Message.ToUpperInvariant().Contains(searchText));
 
         foreach (var matchingEntry in matchingEntries)
         {
@@ -55,6 +55,7 @@ namespace CaptainsLog
           rectangle.MouseUp += OnMarkerClick;
           rectangle.DataContext = matchingEntry.LogEvent;
           rectangle.SetValue(Canvas.TopProperty, (Outline.ActualHeight - 5) * offset);
+          rectangle.ToolTip = matchingEntry.LogEvent.Message;
           Outline.Children.Add(rectangle);
         }
       }
