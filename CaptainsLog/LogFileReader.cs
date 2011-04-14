@@ -37,6 +37,9 @@ namespace CaptainsLog
         var messageNode = eventNode["log4j:message"];
         logEvent.Message = messageNode.InnerText;
 
+        var throwable = eventNode["log4j:throwable"];
+        logEvent.Throwable = throwable != null ? throwable.InnerText : null;
+
         var location = new LocationInfo();
         var locationNode = eventNode["log4j:locationInfo"];
         location.Class = locationNode.Attributes["class"].Value;

@@ -125,19 +125,21 @@
                     <RowDefinition />
                     <RowDefinition />
                     <RowDefinition />
+                    <RowDefinition />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="100" MinWidth="50" />
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
                 
-                <TextBlock Grid.Column="0" Grid.Row="0" Text="Message Details:" />
+                <TextBlock Grid.Column="0" Grid.Row="0" Text="Message Details:" FontWeight="Bold" />
                 <TextBox Grid.Column="1" Grid.Row="0" Text="{Binding Message}" Style="{StaticResource DetailsTextBoxStyle}" />
-                <TextBlock Grid.Column="0" Grid.Row="1" Text="Location:" />
+                <TextBlock Grid.Column="0" Grid.Row="1" Text="Location:" FontWeight="Bold" />
                 <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding Location.Class}" Style="{StaticResource DetailsTextBoxStyle}" />
                 <TextBlock Grid.Column="1" Grid.Row="2"  Text="{Binding Path=Timestamp, StringFormat=\{0:G\}}" />
-                
-            </Grid>
+                <TextBlock Grid.Column="0" Grid.Row="3" Text="Throwable:" FontWeight="Bold" />
+                <TextBox Grid.Column="1" Grid.Row="3" Text="{Binding Throwable}" Style="{StaticResource DetailsTextBoxStyle}" />
+                </Grid>
             </Border>
         </DataTemplate>
         
