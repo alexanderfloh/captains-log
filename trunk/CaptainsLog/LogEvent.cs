@@ -15,6 +15,7 @@ namespace CaptainsLog
     public DateTime Timestamp { get; set; }
     public string Thread { get; set; }
     public string Message { get; set; }
+    public string Throwable { get; set; }
     public LocationInfo Location { get; set; }
 
 
