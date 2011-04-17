@@ -10,7 +10,11 @@
             <GradientStop Color="#FF4E4E4E" Offset="1" />
             <GradientStop Color="#FF828282" Offset="0.244" />
         </LinearGradientBrush>
-        
+
+        <SolidColorBrush x:Key="lightGreen" Color="#FF80E50A" />
+        <SolidColorBrush x:Key="mediumGreen" Color="#FF5CA507" />
+        <SolidColorBrush x:Key="darkGreen" Color="#FF396504" />
+
         <Style x:Key="closeButtonLineStyle" TargetType="Line">
             <Setter Property="Stroke" Value="Gray" />
             <Setter Property="RenderTransform">
@@ -49,10 +53,18 @@
         </ControlTemplate>
 
         <DataTemplate x:Key="closableTabTemplate">
-            <StackPanel Orientation="Horizontal" >
-                <TextBlock Text="{Binding Path=Header, RelativeSource={RelativeSource FindAncestor, AncestorType=TabItem, AncestorLevel=1}}" />
-                <Button Margin="5,0,0,0" ToolTip="Close Tab" Template="{StaticResource closeButtonTemplate}" HorizontalAlignment="Right" />
-            </StackPanel>
+            <Border>
+            <Grid>
+                <Grid.ColumnDefinitions >
+                    <ColumnDefinition />
+                    <ColumnDefinition MaxWidth="15"/>
+                </Grid.ColumnDefinitions>
+                
+                <TextBlock Grid.Column="0" Text="{Binding Path=Header, RelativeSource={RelativeSource FindAncestor, AncestorType=TabItem, AncestorLevel=1}}" />
+                <Button Grid.Column="1" Margin="5,0,0,0" ToolTip="Close Tab" Template="{StaticResource closeButtonTemplate}" HorizontalAlignment="Right" />
+            
+            </Grid>
+            </Border>
         </DataTemplate>
 
         <properties:Settings x:Key="Settings" />

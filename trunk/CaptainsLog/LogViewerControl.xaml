@@ -8,32 +8,9 @@
              d:DesignHeight="300" d:DesignWidth="500" SizeChanged="OnSizeChanged">
     <UserControl.Resources>
         <my:LevelConverter x:Key="levelConverter"/>
-        
-        <SolidColorBrush x:Key="lightGreen" Color="#FF80E50A" />
-        <SolidColorBrush x:Key="mediumGreen" Color="#FF5CA507" />
-        <SolidColorBrush x:Key="darkGreen" Color="#FF396504" />
 
-        <Style x:Key="dataGridRowHeaderStyle" TargetType="{x:Type DataGridRowHeader}">
-            <Setter Property="Background" Value="Transparent" />
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type DataGridRowHeader}">
-                        <Border CornerRadius="5,0,0,5" Width="10" Background="{TemplateBinding Background}">
-                            <ContentPresenter />
-                        </Border>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-            
-            <Style.Triggers>
-                <Trigger Property="IsRowSelected" Value="True">
-                    <Setter Property="Background" Value="{Binding Level, Converter={StaticResource levelConverter}}" />
-                </Trigger>
-            </Style.Triggers>
-        </Style>
 
-        <Style x:Key="dataGridCellStyle" TargetType="{x:Type DataGridCell}">
-            <!-- <Setter Property="Background" Value="Transparent" /> -->
+        <Style x:Key="DataGridCellStyle" TargetType="{x:Type DataGridCell}">
             <Setter Property="BorderBrush" Value="Transparent" />
             <Setter Property="BorderThickness" Value="0" />
             <Setter Property="Foreground" Value="Black" />
@@ -43,12 +20,10 @@
             <Style.Triggers>
                 <Trigger Property="IsSelected" Value="True">
                     <Setter Property="Background" Value="#77AAAAAA" />
-                    <!--<Setter Property="BorderBrush" Value="#77777777" />-->
-                    <!--<Setter Property="BorderThickness" Value="1" />-->
                 </Trigger>
             </Style.Triggers>
         </Style>
-        
+
         <Style TargetType="{x:Type Rectangle}" x:Key="MarkerStyle">
             <Setter Property="Fill" Value="{StaticResource lightGreen}" />
             <Style.Triggers>
@@ -61,117 +36,51 @@
         </Style>
 
         <Style TargetType="{x:Type DataGridRow}" x:Key="rowStyle">
-            <!--
-            <Setter Property="Background" Value="{Binding Level, Converter={StaticResource levelConverter}}" />
-            -->
             <Setter Property="BorderThickness" Value="0" />
         </Style>
-        
-        <Style TargetType="{x:Type Border}" x:Key="detailsStyle">
-            <Style.Setters>
-                <!--
-                <Setter Property="CornerRadius" Value="5" />
-                <Setter Property="Margin" Value="5,2,2,2" />
-                <Setter Property="Padding" Value="3" />
-                -->
-                <Setter Property="BorderThickness" Value="0" />
-                <Setter Property="Background" Value="#77FFFFFF" />
-                
-            </Style.Setters>
-        </Style>
-        
+
         <Style TargetType="TextBox" x:Key="DetailsTextBoxStyle">
             <Setter Property="IsReadOnly" Value="True" />
             <Setter Property="AcceptsReturn" Value="True" />
             <Setter Property="BorderBrush" Value="{x:Null}" />
+            <Setter Property="Background" Value="{x:Null}" />
             <Setter Property="BorderThickness" Value="0" />
             <Setter Property="TextWrapping" Value="Wrap" />
             <Setter Property="SelectionBrush" Value="{StaticResource lightGreen}" />
         </Style>
-        
-        <Style TargetType="TextBlock" x:Key="SearchLabelStyle">
-            <Setter Property="FontStyle" Value="Italic" />
-            <Setter Property="Foreground" Value="#FFC7C7C7" />
-            <!--
-            <Setter Property="Visibility" Value="Hidden" />
-            -->
-            <Style.Triggers>
-                <MultiDataTrigger>
-                    <MultiDataTrigger.Conditions>
-                        <Condition Binding="{Binding Path=Text, RelativeSource={RelativeSource TemplatedParent}}" Value="" />
-                        <Condition Binding="{Binding Path=HasFocus, ElementName=PART_ContentHost}" Value="False"/>
-                    </MultiDataTrigger.Conditions>
-                    
-                    <Setter Property="Visibility" Value="Visible" />
-                    <Setter Property="Foreground" Value="Pink" />
-                    
-                </MultiDataTrigger>
-                <!--
-                <DataTrigger Binding="{Binding Path=Text, RelativeSource={RelativeSource TemplatedParent}}" Value="">
-                    
-                    <Setter Property="Visibility" Value="Visible" />
-                    
-                    
-                    <Setter Property="Foreground" Value="Pink" />
-                </DataTrigger>
-                -->
-            </Style.Triggers>
-        </Style>
-        
+
         <DataTemplate x:Key="details" >
-            <Border Style="{StaticResource detailsStyle}" >
-            <Grid Margin="50,0,0,0">
-                <Grid.RowDefinitions>
-                    <RowDefinition />
-                    <RowDefinition />
-                    <RowDefinition />
-                    <RowDefinition />
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="100" MinWidth="50" />
-                    <ColumnDefinition />
-                </Grid.ColumnDefinitions>
-                
-                <TextBlock Grid.Column="0" Grid.Row="0" Text="Message Details:" FontWeight="Bold" />
-                <TextBox Grid.Column="1" Grid.Row="0" Text="{Binding Message}" Style="{StaticResource DetailsTextBoxStyle}" />
-                <TextBlock Grid.Column="0" Grid.Row="1" Text="Location:" FontWeight="Bold" />
-                <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding Location.Class}" Style="{StaticResource DetailsTextBoxStyle}" />
-                <TextBlock Grid.Column="1" Grid.Row="2"  Text="{Binding Path=Timestamp, StringFormat=\{0:G\}}" />
-                <TextBlock Grid.Column="0" Grid.Row="3" Text="Throwable:" FontWeight="Bold" />
-                <TextBox Grid.Column="1" Grid.Row="3" Text="{Binding Throwable}" Style="{StaticResource DetailsTextBoxStyle}" />
+            <Border>
+                <Grid Margin="0,0,0,0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="50" MinWidth="50" />
+                        <ColumnDefinition Width="100" MinWidth="50" />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Rectangle Grid.Column="0" Grid.Row="0" Grid.RowSpan="4" Fill="{Binding Level, Converter={StaticResource levelConverter}}">                        
+                    </Rectangle>
+                    <TextBlock Grid.Column="1" Grid.Row="0" Text="Message Details:" FontWeight="Bold" />
+                    <TextBox Grid.Column="2" Grid.Row="0" Text="{Binding Message}" Style="{StaticResource DetailsTextBoxStyle}" />
+                    <TextBlock Grid.Column="1" Grid.Row="1" Text="Location:" FontWeight="Bold" />
+                    <TextBox Grid.Column="2" Grid.Row="1" Text="{Binding Location.Class}" Style="{StaticResource DetailsTextBoxStyle}" />
+                    <TextBlock Grid.Column="2" Grid.Row="2"  Text="{Binding Path=Timestamp, StringFormat=\{0:G\}}" />
+                    <TextBlock Grid.Column="1" Grid.Row="3" Text="Throwable:" FontWeight="Bold" />
+                    <TextBox Grid.Column="2" Grid.Row="3" Text="{Binding Throwable}" Style="{StaticResource DetailsTextBoxStyle}" />
                 </Grid>
             </Border>
         </DataTemplate>
-        
+
         <DataTemplate x:Key="levelColumn">
             <Border Background="{Binding Level, Converter={StaticResource levelConverter}}" ToolTip="{Binding Level}" />
         </DataTemplate>
-
-        <ControlTemplate TargetType="{x:Type TextBox}" x:Key="SearchBoxTemplate">
-            <Border BorderThickness="1" CornerRadius="5" BorderBrush="{StaticResource darkGreen}">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition />
-                        <ColumnDefinition />
-                    </Grid.ColumnDefinitions>
-                    <Border >
-                        <ScrollViewer Margin="0"
-                        x:Name="PART_ContentHost" />
-                    </Border>
-                    
-                    <TextBlock Grid.Column="0" Style="{StaticResource SearchLabelStyle}" Panel.ZIndex="1">
-                        Search...
-                    </TextBlock>
-                    
-                    <Button Grid.Column="1">
-                        Clear
-                    </Button>
-                </Grid>
-            </Border>
-        </ControlTemplate>
-
     </UserControl.Resources>
-    
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -182,10 +91,38 @@
             <ColumnDefinition />
             <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
-        <TextBox Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="2" HorizontalAlignment="Right" MinWidth="150" TextChanged="SearchForText" Name="Search" Margin="5" />
-        <!-- Template="{StaticResource SearchBoxTemplate}" -->
-        
-            <DataGrid AutoGenerateColumns="False" 
+
+        <TextBox Grid.Column="0" Grid.Row="0" MinWidth="150" TextChanged="SearchForText" Name="Search" Margin="0, 0, 0, 5">
+            <TextBox.Resources>
+                <VisualBrush x:Key="HelpBrush" TileMode="None" Opacity="0.5" Stretch="None" AlignmentX="Left">
+                    <VisualBrush.Visual>
+                        <TextBlock FontStyle="Italic" Text="Search..." Foreground="{StaticResource darkGreen}" />
+                    </VisualBrush.Visual>
+                </VisualBrush>
+            </TextBox.Resources>
+            <TextBox.Style>
+                <Style TargetType="TextBox">
+                    <Style.Triggers>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="Text" Value="{x:Null}" />
+                                <Condition Property="IsFocused" Value="false" />
+                            </MultiTrigger.Conditions>
+                            <Setter Property="Background" Value="{StaticResource HelpBrush}"/>
+                        </MultiTrigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="Text" Value="" />
+                                <Condition Property="IsFocused" Value="false" />
+                            </MultiTrigger.Conditions>
+                            <Setter Property="Background" Value="{StaticResource HelpBrush}"/>
+                        </MultiTrigger>
+                    </Style.Triggers>
+                </Style>
+            </TextBox.Style>
+        </TextBox>
+
+        <DataGrid AutoGenerateColumns="False" 
                     HorizontalAlignment="Stretch" 
                     Name="dg" 
                     VerticalAlignment="Stretch" 
@@ -197,19 +134,19 @@
                     HorizontalScrollBarVisibility="Disabled" 
                     RowDetailsVisibilityMode="VisibleWhenSelected"
                     RowDetailsTemplate="{StaticResource details}"    
-                    CellStyle="{StaticResource dataGridCellStyle}" 
+                    CellStyle="{StaticResource DataGridCellStyle}" 
                     HorizontalGridLinesBrush="#FFAAAAAA"
-                      Grid.Row="1"
-                      Grid.Column="0"
-                      Grid.ColumnSpan="2" ColumnHeaderHeight="25">
-                <DataGrid.Columns>
-
-                    <DataGridTemplateColumn CellTemplate="{StaticResource levelColumn}" ></DataGridTemplateColumn>
-                    <DataGridTextColumn Binding="{Binding Path=ShortMessage}" Header="Message" IsReadOnly="True"  />
-                    <DataGridTextColumn Binding="{Binding Path=Thread}" Header="Thread" IsReadOnly="True" />
-                    <DataGridTextColumn Binding="{Binding Path=Timestamp, StringFormat=\{0:G\}}" Header="Timestamp" IsReadOnly="True"  />
-                </DataGrid.Columns>
-            </DataGrid>
+                    Grid.Row="1"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="2" ColumnHeaderHeight="25" >
+            
+            <DataGrid.Columns>
+                <DataGridTemplateColumn CellTemplate="{StaticResource levelColumn}" />
+                <DataGridTextColumn Binding="{Binding Path=Message}" Header="Message" IsReadOnly="True" Width="5*" />
+                <DataGridTextColumn Binding="{Binding Path=Thread}" Header="Thread" IsReadOnly="True" Width="2*" />
+                <DataGridTextColumn Binding="{Binding Path=Timestamp, StringFormat=\{0:G\}}" Header="Timestamp" IsReadOnly="True" Width="2*" />
+            </DataGrid.Columns>
+        </DataGrid>
 
         <Canvas Name="Outline" Grid.Column="2" Grid.Row="1"  MinWidth="15">
             <Rectangle Style="{StaticResource MarkerStyle}" MouseUp="OnMarkerClick"></Rectangle>

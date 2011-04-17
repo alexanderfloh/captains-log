@@ -25,7 +25,7 @@
         <Grid.RowDefinitions>
             <RowDefinition />
         </Grid.RowDefinitions>
-        <TabControl Grid.Row="0" HorizontalAlignment="Stretch" Name="mainTab" VerticalAlignment="Stretch">
+        <TabControl Grid.Row="0" Name="mainTab" HorizontalContentAlignment="Stretch">
             <TabItem Header="Welcome" HeaderTemplate="{StaticResource closableTabTemplate}" ButtonBase.Click="CloseTab" Name="welcomeTab">
                 <GroupBox Header="Recent Files">
                     <Grid>
