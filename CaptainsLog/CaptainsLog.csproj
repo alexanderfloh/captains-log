@@ -26,7 +26,7 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <InstallUrl>http://code.google.com/p/captains-log/</InstallUrl>
+    <InstallUrl>http://captains-log.googlecode.com/svn/trunk/CaptainsLog/publish/</InstallUrl>
     <SupportUrl>http://code.google.com/p/captains-log/</SupportUrl>
     <ProductName>Captain%27s Log</ProductName>
     <PublisherName>tehlexx</PublisherName>
