@@ -21,6 +21,15 @@ namespace CaptainsLog {
 
     public MainWindow() {
       InitializeComponent();
+      SetVerionsString();
+    }
+
+    private void SetVerionsString() {
+      try {
+        version.Text = System.Deployment.Application.ApplicationDeployment.CurrentDeployment.CurrentVersion.ToString();
+      } catch (System.Deployment.Application.InvalidDeploymentException) {
+        // happens for local build
+      }
     }
 
     private void OpenCmdExecuted(object target, ExecutedRoutedEventArgs e) {

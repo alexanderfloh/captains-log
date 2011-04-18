@@ -31,6 +31,7 @@
                     <Grid>
                         <ListBox ItemsSource="{Binding Source={StaticResource Settings}, Path=RecentFiles}" ItemTemplate="{StaticResource RecentFilesItem}" BorderBrush="{x:Null}" Name="recentFiles" Background="{x:Null}" Panel.ZIndex="1"></ListBox>
                         <Image Source="/CaptainsLog;component/Images/logviewer-vignette.png" HorizontalAlignment="Right" VerticalAlignment="Bottom" MaxWidth="128" MaxHeight="128" />
+                        <TextBlock Name="version" Text="&lt;version&gt;" VerticalAlignment="Bottom" Opacity="0.3"></TextBlock>
                     </Grid>
                 </GroupBox>
             </TabItem>
