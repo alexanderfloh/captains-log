@@ -40,16 +40,14 @@ namespace CaptainsLog {
             if (System.IO.File.Exists(droppedFilePath)) {
               LoadFile(droppedFilePath);
 
-              var recentFiles = Properties.Settings.Default.RecentFiles;
-
-              if (recentFiles == null) {
-                recentFiles = new System.Collections.Specialized.StringCollection();
-              }
+              var recentFiles = Properties.Settings.Default.RecentFiles ?? new System.Collections.Specialized.StringCollection();
 
               while (recentFiles.Contains(droppedFilePath)) {
                 recentFiles.Remove(droppedFilePath);
               }
+
               recentFiles.Add(droppedFilePath);
+              Properties.Settings.Default.RecentFiles = recentFiles;
             }
             Properties.Settings.Default.Save();
           }
