@@ -26,7 +26,7 @@
             <RowDefinition />
         </Grid.RowDefinitions>
         <TabControl Grid.Row="0" Name="mainTab" HorizontalContentAlignment="Stretch">
-            <TabItem Header="Welcome" HeaderTemplate="{StaticResource closableTabTemplate}" ButtonBase.Click="CloseTab" Name="welcomeTab">
+            <TabItem Header="Welcome" Name="welcomeTab">
                 <GroupBox Header="Recent Files">
                     <Grid>
                         <ListBox ItemsSource="{Binding Source={StaticResource Settings}, Path=RecentFiles}" ItemTemplate="{StaticResource RecentFilesItem}" BorderBrush="{x:Null}" Name="recentFiles" Background="{x:Null}" Panel.ZIndex="1"></ListBox>

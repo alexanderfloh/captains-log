@@ -75,8 +75,9 @@ namespace CaptainsLog {
       tabItem.HeaderTemplate = (DataTemplate)App.Current.Resources["closableTabTemplate"];
       tabItem.Header = System.IO.Path.GetFileName(fileName);
       tabItem.Content = logViewer;
-      tabItem.ToolTip = fileName;
+      //tabItem.ToolTip = fileName;
       tabItem.AddHandler(Button.ClickEvent, new RoutedEventHandler(CloseTab));
+      tabItem.Tag = logFileMonitor;
 
       mainTab.Items.Add(tabItem);
       mainTab.SelectedItem = tabItem;
@@ -89,11 +90,11 @@ namespace CaptainsLog {
       if (tabItem != null) {
         var tabControl = tabItem.Parent as TabControl;
         tabControl.Items.Remove(tabItem);
-        LogViewerControl logViewer = tabItem.Content as LogViewerControl;
-        if (logViewer != null) {
-          // TODO: it's a bit hack-ish to use the tooltip to decide if the elemnt should be removed
-          _logFileMonitors.Where((monitor) => monitor.FileName == (string)tabItem.ToolTip).ToList().ForEach((monitor) => monitor.Dispose());
-          _logFileMonitors.RemoveAll((monitor) => monitor.FileName == (string)tabItem.ToolTip);
+
+        var monitor = tabItem.Tag as LogFileMonitor;
+        if(monitor != null) {
+          _logFileMonitors.Remove(monitor);
+          monitor.Dispose();
         }
       }
     }

@@ -28,20 +28,11 @@ namespace CaptainsLog
           var indexOfNewLine = Message.IndexOf('\n');
           if(indexOfNewLine >= 0) {
             _shortMessage = Message.Substring(0, indexOfNewLine - 1);
+          } else {
+            _shortMessage = Message;
           }
-          else {
-            _shortMessage = Message.Substring(0, Math.Min(120, Message.Length));
-          } 
         }
-
-        if (_shortMessage.Length != Message.Length)
-        {
-          return _shortMessage + " ...";
-        }
-        else
-        {
-          return _shortMessage;
-        }
+        return _shortMessage;
       }
     }
 
