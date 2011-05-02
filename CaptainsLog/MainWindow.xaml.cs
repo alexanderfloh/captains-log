@@ -42,21 +42,14 @@ namespace CaptainsLog {
 
     private void FileDropped(object sender, DragEventArgs e) {
       this.Cursor = Cursors.Wait;
+
       try {
         string[] droppedFilePaths = e.Data.GetData(DataFormats.FileDrop, true) as string[];
         if (droppedFilePaths != null) {
           foreach (string droppedFilePath in droppedFilePaths) {
             if (System.IO.File.Exists(droppedFilePath)) {
               LoadFile(droppedFilePath);
-
-              var recentFiles = Properties.Settings.Default.RecentFiles ?? new System.Collections.Specialized.StringCollection();
-
-              while (recentFiles.Contains(droppedFilePath)) {
-                recentFiles.Remove(droppedFilePath);
-              }
-
-              recentFiles.Add(droppedFilePath);
-              Properties.Settings.Default.RecentFiles = recentFiles;
+              UpdateRecentFiles(droppedFilePath);
             }
             Properties.Settings.Default.Save();
           }
@@ -68,21 +61,22 @@ namespace CaptainsLog {
     }
 
     private void LoadFile(string fileName) {
-      var logViewer = new LogViewerControl();
-      var logFileMonitor = new LogFileMonitor(fileName, logViewer);
+      var logFileViewModel = LogFileViewModelBuilder.CreateForFile(fileName);
+      CreateTab(fileName, logFileViewModel);
 
+      _logFileMonitors.Add(logFileViewModel.LogFileMonitor);
+    }
+
+    private void CreateTab(string fileName, LogFileViewModel logFileViewModel) {
       var tabItem = new TabItem();
       tabItem.HeaderTemplate = (DataTemplate)App.Current.Resources["closableTabTemplate"];
       tabItem.Header = System.IO.Path.GetFileName(fileName);
-      tabItem.Content = logViewer;
-      //tabItem.ToolTip = fileName;
+      tabItem.Content = logFileViewModel.LogFileViewer;
       tabItem.AddHandler(Button.ClickEvent, new RoutedEventHandler(CloseTab));
-      tabItem.Tag = logFileMonitor;
+      tabItem.Tag = logFileViewModel.LogFileMonitor;
 
       mainTab.Items.Add(tabItem);
       mainTab.SelectedItem = tabItem;
-
-      _logFileMonitors.Add(logFileMonitor);
     }
 
     private void CloseTab(object sender, RoutedEventArgs e) {
@@ -99,8 +93,19 @@ namespace CaptainsLog {
       }
     }
 
+    private void UpdateRecentFiles(string droppedFilePath) {
+      var recentFiles = Properties.Settings.Default.RecentFiles ?? new System.Collections.Specialized.StringCollection();
+
+      while (recentFiles.Contains(droppedFilePath)) {
+        recentFiles.Remove(droppedFilePath);
+      }
+
+      recentFiles.Add(droppedFilePath);
+      Properties.Settings.Default.RecentFiles = recentFiles;
+    }
+
     public void Dispose() {
-      _logFileMonitors.ForEach(a => a.Dispose());
+      _logFileMonitors.ForEach(m => m.Dispose());
     }
   }
 }

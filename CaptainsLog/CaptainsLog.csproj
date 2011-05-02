@@ -32,7 +32,7 @@
     <PublisherName>tehlexx</PublisherName>
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>5</ApplicationRevision>
+    <ApplicationRevision>6</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -93,7 +93,16 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="HighlightBar.xaml.cs">
+      <DependentUpon>HighlightBar.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="LogFileViewModel.cs" />
+    <Compile Include="LogFileViewModelBuilder.cs" />
     <Compile Include="RecentFilesConverter.cs" />
+    <Page Include="HighlightBar.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="LogViewerControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
