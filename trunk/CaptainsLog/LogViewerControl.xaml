@@ -69,7 +69,7 @@
                     <TextBox Grid.Column="2" Grid.Row="0" Text="{Binding Message}" Style="{StaticResource DetailsTextBoxStyle}" />
                     <TextBlock Grid.Column="1" Grid.Row="1" Text="Location:" FontWeight="Bold" />
                     <TextBox Grid.Column="2" Grid.Row="1" Text="{Binding Location.Class}" Style="{StaticResource DetailsTextBoxStyle}" />
-                    <TextBlock Grid.Column="2" Grid.Row="2"  Text="{Binding Path=Timestamp, StringFormat=\{0:G\}}" />
+                    <TextBlock Grid.Column="2" Grid.Row="2"  Text="{Binding Path=Timestamp, StringFormat='{}{0:dd/MM/yyyy HH:mm:ss:fff}'}" />
                     <TextBlock Grid.Column="1" Grid.Row="3" Text="Throwable:" FontWeight="Bold" />
                     <TextBox Grid.Column="2" Grid.Row="3" Text="{Binding Throwable}" Style="{StaticResource DetailsTextBoxStyle}" />
                 </Grid>
@@ -108,7 +108,7 @@
             <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
 
-        <TextBox Grid.Column="0" Grid.Row="0" MinWidth="150" TextChanged="SearchForText" Name="Search" Margin="0, 0, 0, 5">
+        <TextBox Grid.Column="1" Grid.Row="0" MinWidth="150" TextChanged="SearchForText" Name="Search" Margin="0, 0, 0, 5" HorizontalAlignment="Right">
             <TextBox.Resources>
                 <VisualBrush x:Key="HelpBrush" TileMode="None" Opacity="0.5" Stretch="None" AlignmentX="Left">
                     <VisualBrush.Visual>
@@ -160,12 +160,15 @@
                 <DataGridTemplateColumn CellTemplate="{StaticResource levelColumn}" />
                 <DataGridTemplateColumn CellTemplate="{StaticResource WrappedTextTemplate}"  Header="Message" IsReadOnly="True" Width="5*" />
                 <DataGridTextColumn Binding="{Binding Path=Thread}" Header="Thread" IsReadOnly="True" Width="2*" />
-                <DataGridTextColumn Binding="{Binding Path=Timestamp, StringFormat=\{0:G\}}" Header="Timestamp" IsReadOnly="True" Width="2*" />
+                <DataGridTextColumn Binding="{Binding Path=Timestamp, StringFormat='{}{0:dd/MM/yyyy HH:mm:ss:fff}'}" Header="Timestamp" IsReadOnly="True" Width="2*" />
             </DataGrid.Columns>
         </DataGrid>
 
+        <!--
         <Canvas Name="Outline" Grid.Column="2" Grid.Row="1"  MinWidth="15">
             <Rectangle Style="{StaticResource MarkerStyle}" MouseUp="OnMarkerClick"></Rectangle>
         </Canvas>
+        -->
+        <my:HighlightBar x:Name="Outline" Grid.Column="2" Grid.Row="1"  MinWidth="15" />
     </Grid>
 </UserControl>

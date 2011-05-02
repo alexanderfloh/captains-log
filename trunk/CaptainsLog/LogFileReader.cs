@@ -29,7 +29,7 @@ namespace CaptainsLog
         var logEvent = new LogEvent();
         logEvent.Logger = eventNode.Attributes["logger"].Value;
         var msSince1970 = long.Parse(eventNode.Attributes["timestamp"].Value);
-        logEvent.Timestamp = new DateTime(1970, 1, 1).AddMilliseconds(msSince1970);
+        logEvent.Timestamp = new DateTime(1970, 1, 1).AddMilliseconds(msSince1970).ToLocalTime();
         logEvent.Level = eventNode.Attributes["level"].Value;
         logEvent.Thread = eventNode.Attributes["thread"].Value;
 
