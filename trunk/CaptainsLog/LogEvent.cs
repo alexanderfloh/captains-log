@@ -25,12 +25,7 @@ namespace CaptainsLog
       {
         if (_shortMessage == null)
         {
-          var indexOfNewLine = Message.IndexOf('\n');
-          if(indexOfNewLine >= 0) {
-            _shortMessage = Message.Substring(0, indexOfNewLine - 1);
-          } else {
-            _shortMessage = Message;
-          }
+          _shortMessage = new string(Message.TakeWhile(c => (c != '\n')).ToArray());
         }
         return _shortMessage;
       }

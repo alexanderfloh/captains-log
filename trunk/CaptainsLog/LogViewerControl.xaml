@@ -6,6 +6,7 @@
              xmlns:my="clr-namespace:CaptainsLog"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="500" SizeChanged="OnSizeChanged">
+    
     <UserControl.Resources>
         <my:LevelConverter x:Key="levelConverter"/>
 
@@ -19,7 +20,7 @@
 
             <Style.Triggers>
                 <Trigger Property="IsSelected" Value="True">
-                    <Setter Property="Background" Value="#77AAAAAA" />
+                    <Setter Property="Background" Value="{StaticResource LightGrey}" />
                 </Trigger>
             </Style.Triggers>
         </Style>
@@ -48,8 +49,24 @@
             <Setter Property="TextWrapping" Value="Wrap" />
             <Setter Property="SelectionBrush" Value="{StaticResource lightGreen}" />
         </Style>
+        
+        <Style TargetType="Border" x:Key="CopyButtonBorderStyle">
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="{StaticResource LightGrey}" />
+                    <Setter Property="BorderBrush" Value="{StaticResource {x:Static SystemColors.ControlDarkDarkBrushKey}}" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        
+        <ControlTemplate TargetType="Button" x:Key="CopyButtonTemplate">
+            <Border BorderThickness="1" CornerRadius="3" Padding="3" Style="{StaticResource CopyButtonBorderStyle}" >
+                <Image Source="/CaptainsLog;component/Images/page_copy.png" Stretch="None" />
+            </Border>
+        </ControlTemplate>
 
-        <DataTemplate x:Key="details" >
+        <DataTemplate x:Key="details" DataType="{x:Type my:LogEvent}">
+            
             <Border>
                 <Grid Margin="0,0,0,0">
                     <Grid.RowDefinitions>
@@ -65,6 +82,18 @@
                     </Grid.ColumnDefinitions>
                     <Rectangle Grid.Column="0" Grid.Row="0" Grid.RowSpan="4" Fill="{Binding Level, Converter={StaticResource levelConverter}}">                        
                     </Rectangle>
+                    <Button Grid.Column="0" 
+                            Grid.Row="0"
+                            Grid.RowSpan="4"
+                            CommandParameter="{Binding}" 
+                            Command="ApplicationCommands.Copy" 
+                            CommandTarget="{Binding RelativeSource={RelativeSource TemplatedParent}}" 
+                            ToolTip="Copy" 
+                            Template="{StaticResource CopyButtonTemplate}" 
+                            HorizontalAlignment="Center" 
+                            VerticalAlignment="Top" 
+                            Margin="0,5,0,0">
+                    </Button>
                     <TextBlock Grid.Column="1" Grid.Row="0" Text="Message Details:" FontWeight="Bold" />
                     <TextBox Grid.Column="2" Grid.Row="0" Text="{Binding Message}" Style="{StaticResource DetailsTextBoxStyle}" />
                     <TextBlock Grid.Column="1" Grid.Row="1" Text="Location:" FontWeight="Bold" />
@@ -155,7 +184,13 @@
                     Grid.Row="1"
                     Grid.Column="0"
                     Grid.ColumnSpan="2" ColumnHeaderHeight="25" >
-            
+
+            <DataGrid.CommandBindings>
+                <CommandBinding Command="ApplicationCommands.Copy"
+                  Executed="CommandBinding_Executed"
+                  CanExecute="CommandBinding_CanExecute"/>
+            </DataGrid.CommandBindings>
+
             <DataGrid.Columns>
                 <DataGridTemplateColumn CellTemplate="{StaticResource levelColumn}" />
                 <DataGridTemplateColumn CellTemplate="{StaticResource WrappedTextTemplate}"  Header="Message" IsReadOnly="True" Width="5*" />
