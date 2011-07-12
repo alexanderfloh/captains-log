@@ -25,33 +25,36 @@ namespace CaptainsLog
       var events = document.GetElementsByTagName("log4j:event");
       var logEvents = new List<LogEvent>();
       foreach (XmlNode eventNode in events)
-      {
-        var logEvent = new LogEvent();
-        logEvent.Logger = eventNode.Attributes["logger"].Value;
-        var msSince1970 = long.Parse(eventNode.Attributes["timestamp"].Value);
-        logEvent.Timestamp = new DateTime(1970, 1, 1).AddMilliseconds(msSince1970).ToLocalTime();
-        logEvent.Level = eventNode.Attributes["level"].Value;
-        logEvent.Thread = eventNode.Attributes["thread"].Value;
+      {       
+        var logger = eventNode.Attributes["logger"].Value;
 
+        var msSince1970 = long.Parse(eventNode.Attributes["timestamp"].Value);
+        var timeStamp = new DateTime(1970, 1, 1).AddMilliseconds(msSince1970).ToLocalTime();
 
         var messageNode = eventNode["log4j:message"];
-        logEvent.Message = messageNode.InnerText;
 
         var throwable = eventNode["log4j:throwable"];
-        logEvent.Throwable = throwable != null ? throwable.InnerText : null;
 
-        var location = new LocationInfo();
         var locationNode = eventNode["log4j:locationInfo"];
-        location.Class = locationNode.Attributes["class"].Value;
-        location.Method = locationNode.Attributes["method"].Value;
-        location.File = locationNode.Attributes["file"].Value;
-
         int line = 0;
-        if(int.TryParse(locationNode.Attributes["line"].Value, out line)) {
-          location.Line = line;
-        }  
+        int.TryParse(locationNode.Attributes["line"].Value, out line);
 
-        logEvent.Location = location;
+        var location = new LocationInfo { 
+          Class = locationNode.Attributes["class"].Value, 
+          Method = locationNode.Attributes["method"].Value,
+          File = locationNode.Attributes["file"].Value,
+          Line = line
+        };
+
+        var logEvent = new LogEvent {
+          Logger = logger,
+          Timestamp = timeStamp,
+          Level = eventNode.Attributes["level"].Value,
+          Thread = eventNode.Attributes["thread"].Value,
+          Message = messageNode.InnerText,
+          Throwable = throwable != null ? throwable.InnerText : null,
+          Location = location
+        };
 
         logEvents.Add(logEvent);
       }

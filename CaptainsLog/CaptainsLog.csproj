@@ -28,11 +28,11 @@
     <MapFileExtensions>true</MapFileExtensions>
     <InstallUrl>http://captains-log.googlecode.com/svn/trunk/CaptainsLog/publish/</InstallUrl>
     <SupportUrl>http://code.google.com/p/captains-log/</SupportUrl>
-    <ProductName>Captain%27s Log</ProductName>
-    <PublisherName>tehlexx</PublisherName>
+    <ProductName>Captain%27s Log Viewer</ProductName>
+    <PublisherName>Captain%27s Log</PublisherName>
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>6</ApplicationRevision>
+    <ApplicationRevision>7</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -181,6 +181,17 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\logviewer-vignette.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\page_copy.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <FileAssociation Include=".xml.1">
+      <Visible>False</Visible>
+      <Description>Captain%27s Log File</Description>
+      <Progid>1</Progid>
+      <DefaultIcon>logomat-icon.ico</DefaultIcon>
+    </FileAssociation>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
