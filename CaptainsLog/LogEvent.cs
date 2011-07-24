@@ -25,7 +25,7 @@ namespace CaptainsLog
       {
         if (_shortMessage == null)
         {
-          _shortMessage = new string(Message.TakeWhile(c => (c != '\n')).ToArray());
+          _shortMessage = String.Concat(Message.TakeWhile(c => c != '\n'));
         }
         return _shortMessage;
       }
