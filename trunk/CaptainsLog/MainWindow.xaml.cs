@@ -11,6 +11,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Diagnostics;
+using System.IO;
+using System.Collections.ObjectModel;
 
 namespace CaptainsLog {
   /// <summary>
@@ -18,10 +21,13 @@ namespace CaptainsLog {
   /// </summary>
   public partial class MainWindow : Window {
     private readonly List<LogFileMonitor> _logFileMonitors = new List<LogFileMonitor>();
+    private ObservableCollection<string> RecentFiles { get; set; }
 
     public MainWindow() {
       InitializeComponent();
       SetVerionsString();
+      RecentFiles = new ObservableCollection<string>();
+      LBRecentFiles.ItemsSource = RecentFiles;
     }
 
     private void SetVerionsString() {
@@ -37,7 +43,7 @@ namespace CaptainsLog {
     }
 
     private void OpenCmdCanExecute(object sender, CanExecuteRoutedEventArgs e) {
-      e.CanExecute = true;
+      e.CanExecute = File.Exists((string)e.Parameter);
     }
 
     private void FileDropped(object sender, DragEventArgs e) {
@@ -102,10 +108,18 @@ namespace CaptainsLog {
 
       recentFiles.Add(droppedFilePath);
       Properties.Settings.Default.RecentFiles = recentFiles;
+      RecentFiles.Clear();
+      foreach (var s in recentFiles) {
+        RecentFiles.Add(s);
+      }
     }
 
     public void Dispose() {
       _logFileMonitors.ForEach(m => m.Dispose());
+    }
+
+    private void OnIssueUrlClick(object sender, RoutedEventArgs e) {
+      Process.Start("http://code.google.com/p/captains-log/issues/list");
     }
   }
 }

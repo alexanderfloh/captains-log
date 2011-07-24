@@ -1,11 +1,13 @@
 ﻿<Window x:Class="CaptainsLog.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Captain's Log Viewer" Height="350" Width="525" xmlns:my="clr-namespace:CaptainsLog" AllowDrop="True" Drop="FileDropped" Background="{StaticResource defaultGradient}" Icon="/CaptainsLog;component/logomat-icon.ico">
+        Title="Captain's Log Viewer" Height="350" Width="525" xmlns:my="clr-namespace:CaptainsLog" 
+        AllowDrop="True" Drop="FileDropped" 
+        Icon="/CaptainsLog;component/logomat-icon.ico" 
+        Background="{StaticResource {x:Static SystemColors.ControlBrushKey}}"
+        >
     <Window.CommandBindings>
-        <CommandBinding Command="ApplicationCommands.Open"
-                  Executed="OpenCmdExecuted"
-                  CanExecute="OpenCmdCanExecute"/>
+        <CommandBinding Command="ApplicationCommands.Open" Executed="OpenCmdExecuted" CanExecute="OpenCmdCanExecute"/>
     </Window.CommandBindings>
 
     <Window.Resources>
@@ -13,29 +15,77 @@
         
         <DataTemplate x:Key="RecentFilesItem">
             <TextBlock>
-                <Hyperlink Command="ApplicationCommands.Open" CommandParameter="{Binding}">
+                <Hyperlink Command="ApplicationCommands.Open" CommandParameter="{Binding}" Foreground="{StaticResource mediumGreen}">
                     <TextBlock Text="{Binding Converter={StaticResource RecentFilesConverter}}" ToolTip="{Binding}" />
                 </Hyperlink>
             </TextBlock>
         </DataTemplate>
         
     </Window.Resources>
-    
-    <Grid Margin="6" >
-        <Grid.RowDefinitions>
-            <RowDefinition />
-        </Grid.RowDefinitions>
-        <TabControl Grid.Row="0" Name="mainTab" HorizontalContentAlignment="Stretch">
-            <TabItem Header="Welcome" Name="welcomeTab">
-                <GroupBox Header="Recent Files">
-                    <Grid>
-                        <ListBox ItemsSource="{Binding Source={StaticResource Settings}, Path=RecentFiles}" ItemTemplate="{StaticResource RecentFilesItem}" BorderBrush="{x:Null}" Name="recentFiles" Background="{x:Null}" Panel.ZIndex="1"></ListBox>
-                        <Image Source="/CaptainsLog;component/Images/logviewer-vignette.png" HorizontalAlignment="Right" VerticalAlignment="Bottom" MaxWidth="128" MaxHeight="128" />
-                        <TextBlock Name="version" Text="&lt;version&gt;" VerticalAlignment="Bottom" Opacity="0.3"></TextBlock>
-                    </Grid>
-                </GroupBox>
+
+    <DockPanel>
+        <StackPanel VerticalAlignment="Bottom" Orientation="Horizontal" DockPanel.Dock="Bottom">
+            <TextBlock Name="version" Text="&lt;Version information not available in debug build&gt;" Opacity="0.3" />
+            <TextBlock VerticalAlignment="Bottom" Padding="5,0,0,0">
+                <Hyperlink Click="OnIssueUrlClick" Foreground="{StaticResource mediumGreen}">
+                    Found an issue?
+                </Hyperlink>
+            </TextBlock>
+        </StackPanel>
+        
+        <TabControl Name="mainTab" HorizontalContentAlignment="Stretch" DockPanel.Dock="Top" Margin="1" Padding="0">
+            <TabItem Name="welcomeTab" Header="Welcome">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <DockPanel Grid.RowSpan="2">
+                        <Expander IsExpanded="True" DockPanel.Dock="Right" Margin="5" BorderBrush="{StaticResource {x:Static SystemColors.ActiveBorderBrushKey}}" Padding="5" HorizontalAlignment="Right" VerticalAlignment="Top">
+                            <Expander.Header>
+                                <DockPanel>
+                                    <TextBlock Text="Getting Started" DockPanel.Dock="Top">
+                                    </TextBlock>
+                                    <!--
+                                    <Line DockPanel.Dock="Bottom" X2="100">
+                                        <Line.Stroke>
+                                            <LinearGradientBrush>
+                                                <GradientStop Color="#CC80E50A" Offset="0.1" />
+                                                <GradientStop Color="Transparent" Offset="1.5" />
+                                            </LinearGradientBrush>
+                                        </Line.Stroke>
+                                    </Line>
+                                    -->
+                                </DockPanel>
+                            </Expander.Header>
+                            <TextBlock TextWrapping="WrapWithOverflow">To display log files, drop them on the application.</TextBlock>
+                        </Expander>
+                        <Expander IsExpanded="True" DockPanel.Dock="Top" Margin="5" BorderBrush="{StaticResource {x:Static SystemColors.ActiveBorderBrushKey}}" Padding="5" VerticalAlignment="Top">
+                            <Expander.Header>
+                                <DockPanel>
+                                <TextBlock Text="Recent Files" DockPanel.Dock="Top">
+                                </TextBlock>
+                                    <!--
+                                    <Line DockPanel.Dock="Bottom" X2="500">
+                                        <Line.Stroke>
+                                            <LinearGradientBrush>
+                                                <GradientStop Color="#CC80E50A" Offset="0.1" />
+                                                <GradientStop Color="Transparent" Offset="1.5" />
+                                            </LinearGradientBrush>
+                                        </Line.Stroke>
+                                    </Line>
+                                    -->
+                                </DockPanel>
+                            </Expander.Header>
+                            <ListBox ItemTemplate="{StaticResource RecentFilesItem}" Name="LBRecentFiles" MinHeight="50" BorderBrush="{x:Null}" Background="{x:Null}"></ListBox>
+                        </Expander>
+                        
+                    </DockPanel>
+                    <Image Source="/CaptainsLog;component/Images/logviewer-vignette.png" HorizontalAlignment="Right" VerticalAlignment="Bottom" MaxWidth="128" MaxHeight="128" Grid.Row="0" Grid.RowSpan="2" />
+                    
+                </Grid>
             </TabItem>
         </TabControl>
         
-    </Grid>
+    </DockPanel>
 </Window>
