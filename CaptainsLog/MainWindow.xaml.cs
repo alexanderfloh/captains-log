@@ -14,6 +14,7 @@ using System.Windows.Shapes;
 using System.Diagnostics;
 using System.IO;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 
 namespace CaptainsLog {
   /// <summary>
@@ -26,8 +27,12 @@ namespace CaptainsLog {
     public MainWindow() {
       InitializeComponent();
       SetVerionsString();
+
       RecentFiles = new ObservableCollection<string>();
       LBRecentFiles.ItemsSource = RecentFiles;
+
+      var recentFiles = Properties.Settings.Default.RecentFiles ?? new StringCollection();
+      ConvertRecentFiles(recentFiles);
     }
 
     private void SetVerionsString() {
@@ -100,7 +105,7 @@ namespace CaptainsLog {
     }
 
     private void UpdateRecentFiles(string droppedFilePath) {
-      var recentFiles = Properties.Settings.Default.RecentFiles ?? new System.Collections.Specialized.StringCollection();
+      var recentFiles = Properties.Settings.Default.RecentFiles ?? new StringCollection();
 
       while (recentFiles.Contains(droppedFilePath)) {
         recentFiles.Remove(droppedFilePath);
@@ -108,6 +113,10 @@ namespace CaptainsLog {
 
       recentFiles.Add(droppedFilePath);
       Properties.Settings.Default.RecentFiles = recentFiles;
+      ConvertRecentFiles(recentFiles);
+    }
+
+    private void ConvertRecentFiles(StringCollection recentFiles) {
       RecentFiles.Clear();
       foreach (var s in recentFiles) {
         RecentFiles.Add(s);
