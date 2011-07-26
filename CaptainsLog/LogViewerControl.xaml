@@ -4,11 +4,13 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:my="clr-namespace:CaptainsLog"
+             xmlns:my.converter="clr-namespace:CaptainsLog.Converter"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="500" SizeChanged="OnSizeChanged">
     
     <UserControl.Resources>
-        <my:LevelConverter x:Key="levelConverter"/>
+        <my.converter:LevelConverter x:Key="levelConverter"/>
+        <my.converter:SolidLevelConverter x:Key="SolidLevelConverter" />
 
 
         <Style x:Key="DataGridCellStyle" TargetType="{x:Type DataGridCell}">
@@ -26,12 +28,23 @@
         </Style>
 
         <Style TargetType="{x:Type Rectangle}" x:Key="MarkerStyle">
-            <Setter Property="Fill" Value="{StaticResource lightGreen}" />
+            <Setter Property="Fill" Value="{Binding Level, Converter={StaticResource levelConverter}}" />
+            
             <Style.Triggers>
                 <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Fill" Value="{StaticResource mediumGreen}" />
-                    <Setter Property="Stroke" Value="{StaticResource mediumGreen}" />
+                    <!--
+                    <Setter Property="Stroke" Value="{StaticResource LightGrey}" />
                     <Setter Property="StrokeThickness" Value="2" />
+                    -->
+                    <Setter Property="Fill" Value="{Binding Level, Converter={StaticResource SolidLevelConverter}}" />
+                    <Setter Property="Opacity" Value="1" />
+                    <!--
+                    <Setter Property="RenderTransform">
+                        <Setter.Value>
+                            <ScaleTransform ScaleY="1.1" ScaleX="1.1" />
+                        </Setter.Value>
+                    </Setter>
+                    -->
                 </Trigger>
             </Style.Triggers>
         </Style>
@@ -139,7 +152,7 @@
 
         <TextBox Grid.Column="1" Grid.Row="0" MinWidth="150" TextChanged="SearchForText" Name="Search" Margin="0, 0, 0, 5" HorizontalAlignment="Right">
             <TextBox.Resources>
-                <VisualBrush x:Key="HelpBrush" TileMode="None" Opacity="0.5" Stretch="None" AlignmentX="Left">
+                <VisualBrush x:Key="HelpBrush" TileMode="None" Opacity="0.5" Stretch="None" AlignmentX="Left" Viewbox="-0.1,0,1,1">
                     <VisualBrush.Visual>
                         <TextBlock FontStyle="Italic" Text="Search..." Foreground="{StaticResource darkGreen}" />
                     </VisualBrush.Visual>

@@ -7,16 +7,9 @@ using System.Windows.Data;
 using System.Globalization;
 using System.Windows;
 
-namespace CaptainsLog
-{
+namespace CaptainsLog.Converter {
   [ValueConversion(typeof(string), typeof(Brush))]
-  class LevelConverter : IValueConverter
-  {
-    //public static readonly RadialGradientBrush InfoBrush = new RadialGradientBrush(Colors.SteelBlue, Colors.Transparent);
-    //public static readonly RadialGradientBrush WarnBrush = new RadialGradientBrush(Colors.BurlyWood, Colors.Transparent);
-    //public static readonly RadialGradientBrush ErrorBrush = new RadialGradientBrush(Colors.IndianRed, Colors.Transparent);
-    //public static readonly RadialGradientBrush DefaultBrush = new RadialGradientBrush(Colors.WhiteSmoke, Colors.Transparent);
-
+  class LevelConverter : IValueConverter {
     public static readonly LinearGradientBrush TraceBrush = new LinearGradientBrush(Colors.Gray, Colors.Transparent, 0);
     public static readonly LinearGradientBrush DebugBrush = new LinearGradientBrush(Colors.Green, Colors.Transparent, 0);
     public static readonly LinearGradientBrush InfoBrush = new LinearGradientBrush(Colors.SteelBlue, Colors.Transparent, 0);
@@ -24,11 +17,9 @@ namespace CaptainsLog
     public static readonly LinearGradientBrush ErrorBrush = new LinearGradientBrush(Colors.IndianRed, Colors.Transparent, 0);
     public static readonly LinearGradientBrush DefaultBrush = new LinearGradientBrush(Colors.WhiteSmoke, Colors.Transparent, 0);
 
-    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-    {
+    public object Convert(object value, Type targetType, object parameter, CultureInfo culture) {
       var level = value as string;
-      switch (level)
-      {
+      switch (level) {
         case "TRACE":
           return TraceBrush;
 
@@ -37,7 +28,7 @@ namespace CaptainsLog
 
         case "INFO":
           return InfoBrush;
-          
+
         case "WARN":
           return WarnBrush;
 
@@ -49,8 +40,7 @@ namespace CaptainsLog
       }
     }
 
-    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-    {
+    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) {
       return DependencyProperty.UnsetValue;
     }
   }
