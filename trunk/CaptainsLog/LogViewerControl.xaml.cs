@@ -111,8 +111,5 @@ namespace CaptainsLog
         }
       }
     }
-
-    
-
   }
 }

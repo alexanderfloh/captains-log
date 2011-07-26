@@ -6,7 +6,7 @@ using System.Windows.Data;
 using System.Globalization;
 using System.Windows;
 
-namespace CaptainsLog {
+namespace CaptainsLog.Converter {
   [ValueConversion(typeof(string), typeof(string))]
   class RecentFilesConverter : IValueConverter {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture) {
