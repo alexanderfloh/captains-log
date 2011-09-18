@@ -200,10 +200,10 @@
 
             <DataGrid.CommandBindings>
                 <CommandBinding Command="ApplicationCommands.Copy"
-                  Executed="CommandBinding_Executed"
-                  CanExecute="CommandBinding_CanExecute"/>
+                  Executed="CommandBindingExecuted"
+                  CanExecute="CommandBindingCanExecute"/>
             </DataGrid.CommandBindings>
-
+            
             <DataGrid.Columns>
                 <DataGridTemplateColumn CellTemplate="{StaticResource levelColumn}" />
                 <DataGridTemplateColumn CellTemplate="{StaticResource WrappedTextTemplate}"  Header="Message" IsReadOnly="True" Width="5*" />

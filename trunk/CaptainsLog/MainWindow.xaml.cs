@@ -1,16 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
+using System.Windows.Controls.Primitives;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using System.Diagnostics;
 using System.IO;
 using System.Collections.ObjectModel;
@@ -38,7 +31,8 @@ namespace CaptainsLog {
     private void SetVerionsString() {
       try {
         version.Text = System.Deployment.Application.ApplicationDeployment.CurrentDeployment.CurrentVersion.ToString();
-      } catch (System.Deployment.Application.InvalidDeploymentException) {
+      }
+      catch (System.Deployment.Application.InvalidDeploymentException) {
         // happens for local build
       }
     }
@@ -52,13 +46,13 @@ namespace CaptainsLog {
     }
 
     private void FileDropped(object sender, DragEventArgs e) {
-      this.Cursor = Cursors.Wait;
+      Cursor = Cursors.Wait;
 
       try {
-        string[] droppedFilePaths = e.Data.GetData(DataFormats.FileDrop, true) as string[];
+        var droppedFilePaths = e.Data.GetData(DataFormats.FileDrop, true) as string[];
         if (droppedFilePaths != null) {
-          foreach (string droppedFilePath in droppedFilePaths) {
-            if (System.IO.File.Exists(droppedFilePath)) {
+          foreach (var droppedFilePath in droppedFilePaths) {
+            if (File.Exists(droppedFilePath)) {
               LoadFile(droppedFilePath);
               UpdateRecentFiles(droppedFilePath);
             }
@@ -67,7 +61,7 @@ namespace CaptainsLog {
         }
       }
       finally {
-        this.Cursor = Cursors.Arrow;
+        Cursor = Cursors.Arrow;
       }
     }
 
@@ -79,13 +73,15 @@ namespace CaptainsLog {
     }
 
     private void CreateTab(string fileName, LogFileViewModel logFileViewModel) {
-      var tabItem = new TabItem();
-      tabItem.HeaderTemplate = (DataTemplate)App.Current.Resources["closableTabTemplate"];
-      tabItem.Header = System.IO.Path.GetFileName(fileName);
-      tabItem.Content = logFileViewModel.LogFileViewer;
-      tabItem.AddHandler(Button.ClickEvent, new RoutedEventHandler(CloseTab));
-      tabItem.Tag = logFileViewModel.LogFileMonitor;
+      var tabItem = new TabItem
+      {
+        HeaderTemplate = (DataTemplate)Application.Current.Resources["closableTabTemplate"],
+        Header = Path.GetFileName(fileName),
+        Content = logFileViewModel.LogFileViewer,
+        Tag = logFileViewModel.LogFileMonitor
+      };
 
+      tabItem.AddHandler(ButtonBase.ClickEvent, new RoutedEventHandler(CloseTab));
       mainTab.Items.Add(tabItem);
       mainTab.SelectedItem = tabItem;
     }
@@ -97,7 +93,7 @@ namespace CaptainsLog {
         tabControl.Items.Remove(tabItem);
 
         var monitor = tabItem.Tag as LogFileMonitor;
-        if(monitor != null) {
+        if (monitor != null) {
           _logFileMonitors.Remove(monitor);
           monitor.Dispose();
         }
@@ -118,7 +114,7 @@ namespace CaptainsLog {
 
     private void ConvertRecentFiles(StringCollection recentFiles) {
       RecentFiles.Clear();
-      foreach (var s in recentFiles) {
+      foreach (var s in from string s in recentFiles where File.Exists(s) select s) {
         RecentFiles.Add(s);
       }
     }

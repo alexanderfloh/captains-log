@@ -1,17 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
-using System.ComponentModel;
 using System.Threading;
 using System.Windows.Threading;
 
@@ -90,26 +83,35 @@ namespace CaptainsLog
       dg.SelectedItems.Add(marker.DataContext);
     }
 
-    private void CommandBinding_CanExecute(object sender, CanExecuteRoutedEventArgs e) {
+    private void CommandBindingCanExecute(object sender, CanExecuteRoutedEventArgs e) {
       e.CanExecute = true;
     }
 
-    private void CommandBinding_Executed(object sender, ExecutedRoutedEventArgs e) {
+    private void CommandBindingExecuted(object sender, ExecutedRoutedEventArgs e) {
       if (e.Command == ApplicationCommands.Copy) {
         var logEvent = e.Parameter as LogEvent;
+        Clipboard.Clear();
+
         if (logEvent != null) {
-          var logEventAsString = String.Format("{0}: {1}\r\nLogger: {2}\r\nThread: {3} ({4})\r\nThrowable: {5}\r\nTime: {6}\r\n", 
-            logEvent.Level, 
-            logEvent.Message, 
-            logEvent.Logger, 
-            logEvent.Thread,
-            logEvent.Location,
-            logEvent.Throwable, 
-            logEvent.Timestamp);
-          Clipboard.Clear();
+          var logEventAsString = FormatSingleLogEvent(logEvent);
           Clipboard.SetText(logEventAsString);
         }
+        else {
+          var logEventsFormatted = dg.SelectedItems.OfType<LogEvent>().Select(FormatSingleLogEvent).Aggregate((formatted, next) => formatted + next);
+          Clipboard.SetText(logEventsFormatted);
+        }
       }
+    }
+
+    private string FormatSingleLogEvent(LogEvent logEvent) {
+      return String.Format("{0}: {1}\r\nLogger: {2}\r\nThread: {3} ({4})\r\nThrowable: {5}\r\nTime: {6}\r\n",
+            logEvent.Level,
+            logEvent.Message,
+            logEvent.Logger,
+            logEvent.Thread,
+            logEvent.Location,
+            logEvent.Throwable,
+            logEvent.Timestamp);
     }
   }
 }

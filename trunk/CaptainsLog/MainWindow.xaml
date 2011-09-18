@@ -12,6 +12,10 @@
         <CommandBinding Command="ApplicationCommands.Open" Executed="OpenCmdExecuted" CanExecute="OpenCmdCanExecute"/>
     </Window.CommandBindings>
 
+    <Window.InputBindings>
+        <KeyBinding Command="ApplicationCommands.Copy" Modifiers="Ctrl" Key="C" />
+    </Window.InputBindings>
+
     <Window.Resources>
         <my.converter:RecentFilesConverter x:Key="RecentFilesConverter" />
         
