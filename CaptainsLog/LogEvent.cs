@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
-namespace CaptainsLog
-{
-  public class LogEvent
-  {
+namespace CaptainsLog {
+  public class LogEvent {
     private string _shortMessage;
 
     public string Level { get; set; }
@@ -19,28 +16,17 @@ namespace CaptainsLog
     public LocationInfo Location { get; set; }
 
 
-    public string ShortMessage
-    {
-      get
-      {
-        if (_shortMessage == null)
-        {
-          _shortMessage = String.Concat(Message.TakeWhile(c => c != '\n'));
-        }
-        return _shortMessage;
-      }
+    public string ShortMessage {
+      get { return _shortMessage ?? (_shortMessage = String.Concat(Message.TakeWhile(c => c != '\n'))); }
     }
 
-    public override string ToString()
-    {
+    public override string ToString() {
       return "LogEvent[" + Level + ": " + Logger + " @" + Timestamp + " in thread " + Thread + "]";
     }
   }
 
-  public class LogEventComparer : IComparer<LogEvent>
-  {
-    public int Compare(LogEvent lhs, LogEvent rhs)
-    {
+  public class LogEventComparer : IComparer<LogEvent> {
+    public int Compare(LogEvent lhs, LogEvent rhs) {
       if (lhs == null && rhs == null)
         return 0;
       if (lhs == null)

@@ -1,11 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Xml;
 using System.IO;
-using System.Collections;
-using System.Collections.ObjectModel;
 
 namespace CaptainsLog
 {
@@ -13,8 +9,8 @@ namespace CaptainsLog
   {
     public ICollection<LogEvent> Read(string fileName)
     {
-      string fileContents = "";
-      using (StreamReader sr = new StreamReader(File.Open(fileName, FileMode.OpenOrCreate, FileAccess.Read, FileShare.ReadWrite)))
+      string fileContents;
+      using (var sr = new StreamReader(File.Open(fileName, FileMode.OpenOrCreate, FileAccess.Read, FileShare.ReadWrite)))
       {
         fileContents = sr.ReadToEnd();
       }
@@ -36,7 +32,7 @@ namespace CaptainsLog
         var throwable = eventNode["log4j:throwable"];
 
         var locationNode = eventNode["log4j:locationInfo"];
-        int line = 0;
+        int line;
         int.TryParse(locationNode.Attributes["line"].Value, out line);
 
         var location = new LocationInfo { 

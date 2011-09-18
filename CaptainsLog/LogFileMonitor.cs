@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.IO;
 using System.Collections.ObjectModel;
 using System.Windows.Threading;
@@ -24,7 +22,7 @@ namespace CaptainsLog
     }
 
     private void OpenFileAndMonitor() {
-      LogFileReader r = new LogFileReader();
+      var r = new LogFileReader();
       var data = r.Read(FileName);
       _logViewerControl.DataContext = new ObservableCollection<LogEvent>(data);
       _readEntries = data.Count;
@@ -32,22 +30,23 @@ namespace CaptainsLog
     }
 
     private void RegisterWatchers() {
-      _watcher = new FileSystemWatcher();
-      _watcher.Path = Path.GetDirectoryName(FileName);
-      _watcher.Filter = Path.GetFileName(FileName);
-      _watcher.NotifyFilter = NotifyFilters.LastWrite;
-      _watcher.Changed += new FileSystemEventHandler(OnChanged);
+      _watcher = new FileSystemWatcher {
+                     Path = Path.GetDirectoryName(FileName),
+                     Filter = Path.GetFileName(FileName),
+                     NotifyFilter = NotifyFilters.LastWrite
+                   };
+      _watcher.Changed += OnChanged;
       _watcher.IncludeSubdirectories = false;
       _watcher.EnableRaisingEvents = true;
     }
 
     void OnChanged(object sender, FileSystemEventArgs e) {
-      LogFileReader r = new LogFileReader();
-      ICollection<LogEvent> collection = r.Read(FileName);
+      var r = new LogFileReader();
+      var collection = r.Read(FileName);
 
       _logViewerControl.Dispatcher.Invoke(DispatcherPriority.DataBind, new Action(() => {
-        ObservableCollection<LogEvent> dataContext = (ObservableCollection<LogEvent>)_logViewerControl.DataContext;
-        IEnumerable<LogEvent> newEntries = collection.Skip(_readEntries);
+        var dataContext = (ObservableCollection<LogEvent>)_logViewerControl.DataContext;
+        var newEntries = collection.Skip(_readEntries);
         foreach (var newEntry in newEntries) {
           dataContext.Add(newEntry);
         }
