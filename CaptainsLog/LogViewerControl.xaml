@@ -10,6 +10,7 @@
     
     <UserControl.Resources>
         <my.converter:LevelConverter x:Key="levelConverter"/>
+        <my.converter:LocationConverter x:Key="LocationConverter"/>
         <my.converter:SolidLevelConverter x:Key="SolidLevelConverter" />
 
 
@@ -110,7 +111,8 @@
                     <TextBlock Grid.Column="1" Grid.Row="0" Text="Message Details:" FontWeight="Bold" />
                     <TextBox Grid.Column="2" Grid.Row="0" Text="{Binding Message}" Style="{StaticResource DetailsTextBoxStyle}" />
                     <TextBlock Grid.Column="1" Grid.Row="1" Text="Location:" FontWeight="Bold" />
-                    <TextBox Grid.Column="2" Grid.Row="1" Text="{Binding Location.Class}" Style="{StaticResource DetailsTextBoxStyle}" />
+                    <TextBox Grid.Column="2" Grid.Row="1" 
+                             Text="{Binding Path=Location, Converter={StaticResource LocationConverter}}" Style="{StaticResource DetailsTextBoxStyle}" />
                     <TextBlock Grid.Column="2" Grid.Row="2"  Text="{Binding Path=Timestamp, StringFormat='{}{0:dd/MM/yyyy HH:mm:ss:fff}'}" />
                     <TextBlock Grid.Column="1" Grid.Row="3" Text="Throwable:" FontWeight="Bold" />
                     <TextBox Grid.Column="2" Grid.Row="3" Text="{Binding Throwable}" Style="{StaticResource DetailsTextBoxStyle}" />
