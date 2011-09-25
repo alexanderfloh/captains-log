@@ -56,16 +56,23 @@
 
         <DataTemplate x:Key="closableTabTemplate">
             <Border>
-            <Grid>
-                <Grid.ColumnDefinitions >
-                    <ColumnDefinition />
-                    <ColumnDefinition MaxWidth="15"/>
-                </Grid.ColumnDefinitions>
-                
-                <ContentControl Grid.Column="0" Content="{Binding Path=Header, RelativeSource={RelativeSource FindAncestor, AncestorType=TabItem, AncestorLevel=1}}" />
-                <Button Grid.Column="1" Margin="5,0,0,0" ToolTip="Close Tab" Template="{StaticResource closeButtonTemplate}" HorizontalAlignment="Right" />
-            
-            </Grid>
+                <Grid>
+                    <Grid.InputBindings>
+                        <MouseBinding Command="ApplicationCommands.Close" Gesture="MiddleClick" />
+                    </Grid.InputBindings>
+                    <Grid.ColumnDefinitions >
+                        <ColumnDefinition />
+                        <ColumnDefinition MaxWidth="15"/>
+                    </Grid.ColumnDefinitions>
+
+                    <ContentControl Grid.Column="0" Content="{Binding Path=Header, RelativeSource={RelativeSource FindAncestor, AncestorType=TabItem, AncestorLevel=1}}" />
+                    <Button Grid.Column="1" Margin="5,0,0,0" ToolTip="Close Tab" Template="{StaticResource closeButtonTemplate}" HorizontalAlignment="Right">
+                        <Button.InputBindings>
+                            <MouseBinding Command="ApplicationCommands.Close" Gesture="LeftClick" />
+                        </Button.InputBindings>
+                    </Button>
+
+                </Grid>
             </Border>
         </DataTemplate>
 
