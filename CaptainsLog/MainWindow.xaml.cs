@@ -19,16 +19,16 @@ namespace CaptainsLog {
 
     public MainWindow() {
       InitializeComponent();
-      SetVerionsString();
+      SetVersionString();
 
       RecentFiles = new ObservableCollection<string>();
-      LBRecentFiles.ItemsSource = RecentFiles;
+      welcomeTab.LBRecentFiles.ItemsSource = RecentFiles;
 
       var recentFiles = Properties.Settings.Default.RecentFiles ?? new StringCollection();
       ConvertRecentFiles(recentFiles);
     }
 
-    private void SetVerionsString() {
+    private void SetVersionString() {
       try {
         version.Text = System.Deployment.Application.ApplicationDeployment.CurrentDeployment.CurrentVersion.ToString();
       }
@@ -78,10 +78,8 @@ namespace CaptainsLog {
         HeaderTemplate = (DataTemplate)Application.Current.Resources["closableTabTemplate"],
         Header = Path.GetFileName(fileName),
         Content = logFileViewModel.LogFileViewer,
-        Tag = logFileViewModel.LogFileMonitor
+        Tag = logFileViewModel.LogFileMonitor,
       };
-
-      tabItem.AddHandler(ButtonBase.ClickEvent, new RoutedEventHandler(CloseTab));
       mainTab.Items.Add(tabItem);
       mainTab.SelectedItem = tabItem;
     }
@@ -125,6 +123,14 @@ namespace CaptainsLog {
 
     private void OnIssueUrlClick(object sender, RoutedEventArgs e) {
       Process.Start("http://code.google.com/p/captains-log/issues/list");
+    }
+
+    private void CloseCommandExecuted(object sender, ExecutedRoutedEventArgs e) {
+      CloseTab(sender, e);
+    }
+
+    private void CloseCommandCanExecute(object sender, CanExecuteRoutedEventArgs e) {
+      e.CanExecute = true;
     }
   }
 }

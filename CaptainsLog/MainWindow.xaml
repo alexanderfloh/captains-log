@@ -10,32 +10,13 @@
         >
     <Window.CommandBindings>
         <CommandBinding Command="ApplicationCommands.Open" Executed="OpenCmdExecuted" CanExecute="OpenCmdCanExecute"/>
+        <CommandBinding Command="ApplicationCommands.Close" Executed="CloseCommandExecuted" CanExecute="CloseCommandCanExecute" />
     </Window.CommandBindings>
 
     <Window.InputBindings>
         <KeyBinding Command="ApplicationCommands.Copy" Modifiers="Ctrl" Key="C" />
     </Window.InputBindings>
-
-    <Window.Resources>
-        <my.converter:RecentFilesConverter x:Key="RecentFilesConverter" />
-        
-        <DataTemplate x:Key="RecentFilesItem">
-            <TextBlock>
-                <Hyperlink Command="ApplicationCommands.Open" CommandParameter="{Binding}" Foreground="{StaticResource mediumGreen}">
-                    <TextBlock Text="{Binding Converter={StaticResource RecentFilesConverter}}" ToolTip="{Binding}" />
-                </Hyperlink>
-            </TextBlock>
-        </DataTemplate>
-        
-        <Style TargetType="Expander" x:Key="ExpanderStyle">
-            <Setter Property="IsExpanded" Value="True" />
-            <Setter Property="Margin" Value="5" />
-            <Setter Property="Padding" Value="5" />
-            <Setter Property="BorderBrush" Value="{StaticResource {x:Static SystemColors.ActiveBorderBrushKey}}" />
-            <Setter Property="Background" Value="#55FFFFFF" />
-        </Style>
-    </Window.Resources>
-
+    
     <DockPanel>
         <DockPanel VerticalAlignment="Bottom" DockPanel.Dock="Bottom" Margin="0,0,0,1">
             <TextBlock Name="version" Text="&lt;Version information not available in debug build&gt;" Opacity="0.3" />
@@ -50,71 +31,9 @@
             <TabControl.Effect>
                 <DropShadowEffect Direction="-90" Color="#FF396504" Opacity="0.7" ShadowDepth="3" BlurRadius="10" />
             </TabControl.Effect>
-            
-            <TabItem Name="welcomeTab" Header="Welcome">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition />
-                        <RowDefinition />
-                    </Grid.RowDefinitions>
-                    <Grid Grid.RowSpan="2" Panel.ZIndex="1">
-                        <Grid.RowDefinitions>
-                            <RowDefinition />
-                           <!-- <RowDefinition /> -->
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition />
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition />
-                        </Grid.ColumnDefinitions>
-                        <Expander Style="{StaticResource ExpanderStyle}" VerticalAlignment="Top">
-                            <Expander.Header>
-                                <DockPanel>
-                                    <TextBlock Text="Recent Files" DockPanel.Dock="Top">
-                                    </TextBlock>
-                                    
-                                    <Line DockPanel.Dock="Bottom" X2="500">
-                                        <Line.Stroke>
-                                            <LinearGradientBrush>
-                                                <GradientStop Color="#CC80E50A" Offset="0.1" />
-                                                <GradientStop Color="Transparent" Offset="1.5" />
-                                            </LinearGradientBrush>
-                                        </Line.Stroke>
-                                    </Line>
-                                    
-                                </DockPanel>
-                            </Expander.Header>
-                            <ListBox ItemTemplate="{StaticResource RecentFilesItem}" Name="LBRecentFiles" MinHeight="50" BorderBrush="{x:Null}" Background="{x:Null}"></ListBox>
-                        </Expander>
-                        <GridSplitter Grid.Column="1" ResizeDirection="Columns" MinWidth="3" HorizontalAlignment="Center" Background="{StaticResource {x:Static SystemColors.ActiveBorderBrushKey}}" Margin="0,5" BorderThickness="1" />
-                        <Expander Grid.Column="2" Style="{StaticResource ExpanderStyle}" VerticalAlignment="Top">
-                            <Expander.Header>
-                                <DockPanel>
-                                    <TextBlock Text="Getting Started" DockPanel.Dock="Top">
-                                    </TextBlock>
-                                    
-                                    <Line DockPanel.Dock="Bottom" X2="500">
-                                        <Line.Stroke>
-                                            <LinearGradientBrush>
-                                                <GradientStop Color="#CC80E50A" Offset="0.1" />
-                                                <GradientStop Color="Transparent" Offset="1.5" />
-                                            </LinearGradientBrush>
-                                        </Line.Stroke>
-                                    </Line>
-                                    
-                                </DockPanel>
-                            </Expander.Header>
-                            <TextBlock TextWrapping="WrapWithOverflow">To display log files, drop them on the application.</TextBlock>
-                        </Expander>
-                        <!--
-                        <Expander Grid.Row="1" Header="What's new" Style="{StaticResource ExpanderStyle}">
-                            <WebBrowser Source="http://captains-log.googlecode.com/svn/trunk/CaptainsLog/publish/publish.htm" />
-                        </Expander>
-                        -->
-                    </Grid>
-                    <Image Source="/CaptainsLog;component/Images/logviewer-vignette.png" HorizontalAlignment="Right" VerticalAlignment="Bottom" MaxWidth="128" MaxHeight="128" Grid.Row="0" Grid.RowSpan="2" />
-                    
-                </Grid>
+
+            <TabItem Header="Welcome">
+                <my:WelcomeTab x:Name="welcomeTab"/>
             </TabItem>
         </TabControl>
         
