@@ -63,7 +63,7 @@
     <ApplicationIcon>logomat-icon.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>A94A14B32E02E7C592C9D1200B885ECF00157DE4</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>543F2024A2D8B9C29211D7F2CBF148DE88D2F5B0</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
     <ManifestKeyFile>CaptainsLog_TemporaryKey.pfx</ManifestKeyFile>

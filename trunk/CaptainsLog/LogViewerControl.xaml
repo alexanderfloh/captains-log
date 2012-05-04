@@ -7,7 +7,14 @@
              xmlns:my.converter="clr-namespace:CaptainsLog.Converter"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="500" SizeChanged="OnSizeChanged">
-    
+    <UserControl.InputBindings>
+        <KeyBinding Command="ApplicationCommands.Find" Key="F3" />
+    </UserControl.InputBindings>
+    <UserControl.CommandBindings>
+        <CommandBinding Command="ApplicationCommands.Find"
+                  Executed="CommandBindingExecuted"
+                  CanExecute="CommandBindingCanExecute"/>
+    </UserControl.CommandBindings>
     <UserControl.Resources>
         <my.converter:LevelConverter x:Key="levelConverter"/>
         <my.converter:LocationConverter x:Key="LocationConverter"/>
