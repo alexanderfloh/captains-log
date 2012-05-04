@@ -15,6 +15,7 @@
 
     <Window.InputBindings>
         <KeyBinding Command="ApplicationCommands.Copy" Modifiers="Ctrl" Key="C" />
+        <KeyBinding Command="ApplicationCommands.Find" Key="F3" />
     </Window.InputBindings>
     
     <DockPanel>
@@ -28,10 +29,11 @@
         </DockPanel>
         
         <TabControl Name="mainTab" HorizontalContentAlignment="Stretch" DockPanel.Dock="Top" Margin="1,1,1,6" Padding="2">
+            <!--
             <TabControl.Effect>
                 <DropShadowEffect Direction="-90" Color="#FF396504" Opacity="0.7" ShadowDepth="3" BlurRadius="10" />
             </TabControl.Effect>
-
+            -->
             <TabItem Header="Welcome">
                 <my:WelcomeTab x:Name="welcomeTab"/>
             </TabItem>

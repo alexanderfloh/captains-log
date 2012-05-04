@@ -17,6 +17,8 @@ namespace CaptainsLog
   {
     private Thread _workerThread;
     private string _lastSearchText;
+    private IList<LogEvent> _matchingEntries;
+    private int _nthEntry;
 
     public LogViewerControl()
     {
@@ -33,6 +35,15 @@ namespace CaptainsLog
     {
       UpdateOutline();
     }
+        
+    private void FindNext() {
+      if (_matchingEntries.Count > 0) {
+        _nthEntry = (_nthEntry + 1) % _matchingEntries.Count;
+        var firstEntry = _matchingEntries.ElementAtOrDefault(_nthEntry);
+        dg.ScrollIntoView(firstEntry);
+        dg.SelectedItem = firstEntry;
+      }
+    }
 
     private void UpdateOutline() {
       string searchText = Search.Text.ToUpperInvariant();
@@ -46,6 +57,9 @@ namespace CaptainsLog
         if (searchText.Length > 0) {
           ICollection<LogEvent> events = (ICollection<LogEvent>)DataContext;
           var matchingEntries = events.Select((logEvent, index) => new { LogEvent = logEvent, Index = index }).Where((elem) => elem.LogEvent.Message.ToUpperInvariant().Contains(searchText));
+
+          _matchingEntries = matchingEntries.Select(pair => pair.LogEvent).ToList();
+          _nthEntry = 0;
 
           ThreadStart start = delegate() {
 
@@ -71,13 +85,15 @@ namespace CaptainsLog
           _workerThread = new Thread(start);
           _workerThread.Start();
         }
+        else {
+          _matchingEntries = new List<LogEvent>();
+        }
       }
       _lastSearchText = searchText;
     }
 
     
-    private void OnMarkerClick(object sender, MouseButtonEventArgs e)
-    {
+    private void OnMarkerClick(object sender, MouseButtonEventArgs e) {
       var marker = sender as Rectangle;
       dg.ScrollIntoView(marker.DataContext);
       dg.SelectedItems.Add(marker.DataContext);
@@ -100,6 +116,9 @@ namespace CaptainsLog
           var logEventsFormatted = dg.SelectedItems.OfType<LogEvent>().Select(FormatSingleLogEvent).Aggregate((formatted, next) => formatted + next);
           Clipboard.SetText(logEventsFormatted);
         }
+      }
+      else if (e.Command == ApplicationCommands.Find) {
+        FindNext();
       }
     }
 
