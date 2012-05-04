@@ -4,5 +4,5 @@
   # *`[ done `]* Display "Throwable" contents of log file.
   # a way to Filter loggers
   # a way to display only messages >= a certain level
-  # Search feature should jump to the first found entry
+  # *`[ done `]* Search feature should jump to the first found entry
   # Highlight search string in datagrid
