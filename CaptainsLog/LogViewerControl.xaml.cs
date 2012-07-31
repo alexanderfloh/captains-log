@@ -38,27 +38,36 @@ namespace CaptainsLog
         
     private void FindNext() {
       if (_matchingEntries.Count > 0) {
-        _nthEntry = (_nthEntry + 1) % _matchingEntries.Count;
         var firstEntry = _matchingEntries.ElementAtOrDefault(_nthEntry);
+        _nthEntry = (_nthEntry + 1) % _matchingEntries.Count;
         dg.ScrollIntoView(firstEntry);
         dg.SelectedItem = firstEntry;
       }
     }
 
     private void UpdateOutline() {
-      string searchText = Search.Text.ToUpperInvariant();
+      var searchText = Search.Text.ToUpperInvariant();
 
       if (_lastSearchText != searchText) {
         if (_workerThread != null) {
           _workerThread.Abort();
           Outline.Canvas.Children.Clear();
         }
-
         if (searchText.Length > 0) {
-          ICollection<LogEvent> events = (ICollection<LogEvent>)DataContext;
-          var matchingEntries = events.Select((logEvent, index) => new { LogEvent = logEvent, Index = index }).Where((elem) => elem.LogEvent.Message.ToUpperInvariant().Contains(searchText));
-
-          _matchingEntries = matchingEntries.Select(pair => pair.LogEvent).ToList();
+          var events = (ICollection<LogEvent>)DataContext;
+          // see if search text is a timestamp
+          DateTime dateTime;
+          var matchingEntries = DateTime.TryParse(searchText, out dateTime) ? 
+          events.Select((logEvent, index) => new { LogEvent = logEvent, Index = index }).Where(elem => {
+            var timeOfDay = elem.LogEvent.Timestamp.TimeOfDay;
+            if(timeOfDay.Hours == dateTime.Hour && timeOfDay.Minutes == dateTime.Minute) {
+              return dateTime.Second == 0 || timeOfDay.Seconds == dateTime.Second;
+            }
+            return false;
+          }) : 
+         events.Select((logEvent, index) => new { LogEvent = logEvent, Index = index }).Where((elem) => elem.LogEvent.Message.ToUpperInvariant().Contains(searchText));
+        
+          _matchingEntries = matchingEntries.Select(pair => pair.LogEvent).ToList();  
           _nthEntry = 0;
 
           ThreadStart start = delegate() {
@@ -80,6 +89,7 @@ namespace CaptainsLog
                 Outline.Canvas.Children.Add(rectangle);
               }));
             }
+            Dispatcher.Invoke(DispatcherPriority.Background, new Action(FindNext));
           };
 
           _workerThread = new Thread(start);
