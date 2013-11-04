@@ -105,7 +105,7 @@ namespace CaptainsLog {
         recentFiles.Remove(droppedFilePath);
       }
 
-      recentFiles.Add(droppedFilePath);
+      recentFiles.Insert(0, droppedFilePath);
       Properties.Settings.Default.RecentFiles = recentFiles;
       ConvertRecentFiles(recentFiles);
     }
