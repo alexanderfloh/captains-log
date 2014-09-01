@@ -34,7 +34,7 @@
     <PublisherName>Captain%27s Log</PublisherName>
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>18</ApplicationRevision>
+    <ApplicationRevision>19</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -63,7 +63,7 @@
     <ApplicationIcon>logomat-icon.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>EE9D0156D63498B16390E2EAEA84E5773F8D7D77</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>242695636CCAE8ADD52AB06FBB29A54824DDA2E3</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
     <ManifestKeyFile>CaptainsLog_TemporaryKey.pfx</ManifestKeyFile>
@@ -81,6 +81,12 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
     <PlatformTarget>AnyCPU</PlatformTarget>
     <OutputPath>bin\Release\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>CaptainsLog_TemporaryKey.pfx</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -107,9 +113,6 @@
     <Compile Include="Converter\LocationConverter.cs" />
     <Compile Include="Converter\RecentFilesConverter.cs" />
     <Compile Include="Converter\SolidLevelConverter.cs" />
-    <Compile Include="DetailView.xaml.cs">
-      <DependentUpon>DetailView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="HighlightBar.xaml.cs">
       <DependentUpon>HighlightBar.xaml</DependentUpon>
     </Compile>
@@ -118,10 +121,6 @@
     <Compile Include="WelcomeTab.xaml.cs">
       <DependentUpon>WelcomeTab.xaml</DependentUpon>
     </Compile>
-    <Page Include="DetailView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="HighlightBar.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -210,7 +209,7 @@
     <Resource Include="Images\page_copy.png" />
   </ItemGroup>
   <ItemGroup>
-    <FileAssociation Include=".xml.1">
+    <FileAssociation Include=".clog">
       <Visible>False</Visible>
       <Description>Captain%27s Log File</Description>
       <Progid>1</Progid>
