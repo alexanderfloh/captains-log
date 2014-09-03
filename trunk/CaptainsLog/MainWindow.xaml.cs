@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -26,6 +27,16 @@ namespace CaptainsLog {
 
       var recentFiles = Properties.Settings.Default.RecentFiles ?? new StringCollection();
       ConvertRecentFiles(recentFiles);
+
+      var activationArgs = AppDomain.CurrentDomain.SetupInformation.ActivationArguments;
+      if (activationArgs != null && activationArgs.ActivationData != null && activationArgs.ActivationData.Length > 0) {
+        try {
+          var uri = new Uri(activationArgs.ActivationData[0]);
+          LoadFile(uri.LocalPath);
+        }
+        catch (Exception) {
+        }
+      }
     }
 
     private void SetVersionString() {
