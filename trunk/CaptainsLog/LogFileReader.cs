@@ -3,15 +3,11 @@ using System.Collections.Generic;
 using System.Xml;
 using System.IO;
 
-namespace CaptainsLog
-{
-  public class LogFileReader
-  {
-    public ICollection<LogEvent> Read(string fileName)
-    {
+namespace CaptainsLog {
+  public class LogFileReader {
+    public ICollection<LogEvent> Read(string fileName) {
       string fileContents;
-      using (var sr = new StreamReader(File.Open(fileName, FileMode.OpenOrCreate, FileAccess.Read, FileShare.ReadWrite)))
-      {
+      using (var sr = new StreamReader(File.Open(fileName, FileMode.OpenOrCreate, FileAccess.Read, FileShare.ReadWrite))) {
         fileContents = sr.ReadToEnd();
       }
       var xmlString = "<log xmlns:log4j='http://logging.apache.org/log4j/'>" + fileContents + "</log>";
@@ -20,8 +16,7 @@ namespace CaptainsLog
       document.LoadXml(xmlString);
       var events = document.GetElementsByTagName("log4j:event");
       var logEvents = new List<LogEvent>();
-      foreach (XmlNode eventNode in events)
-      {       
+      foreach (XmlNode eventNode in events) {
         var logger = eventNode.Attributes["logger"].Value;
 
         var msSince1970 = long.Parse(eventNode.Attributes["timestamp"].Value);
@@ -35,8 +30,8 @@ namespace CaptainsLog
         int line;
         int.TryParse(locationNode.Attributes["line"].Value, out line);
 
-        var location = new LocationInfo { 
-          Class = locationNode.Attributes["class"].Value, 
+        var location = new LocationInfo {
+          Class = locationNode.Attributes["class"].Value,
           Method = locationNode.Attributes["method"].Value,
           File = locationNode.Attributes["file"].Value,
           Line = line

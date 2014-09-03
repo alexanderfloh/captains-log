@@ -52,10 +52,7 @@ namespace CaptainsLog {
         var droppedFilePaths = e.Data.GetData(DataFormats.FileDrop, true) as string[];
         if (droppedFilePaths != null) {
           foreach (var droppedFilePath in droppedFilePaths) {
-            if (File.Exists(droppedFilePath)) {
-              LoadFile(droppedFilePath);
-              UpdateRecentFiles(droppedFilePath);
-            }
+            LoadFile(droppedFilePath);              
             Properties.Settings.Default.Save();
           }
         }
@@ -65,11 +62,14 @@ namespace CaptainsLog {
       }
     }
 
-    private void LoadFile(string fileName) {
-      var logFileViewModel = LogFileViewModelBuilder.CreateForFile(fileName);
-      CreateTab(fileName, logFileViewModel);
+    public void LoadFile(string fileName) {
+      if (File.Exists(fileName)) {
+        var logFileViewModel = LogFileViewModelBuilder.CreateForFile(fileName);
+        CreateTab(fileName, logFileViewModel);
 
-      _logFileMonitors.Add(logFileViewModel.LogFileMonitor);
+        _logFileMonitors.Add(logFileViewModel.LogFileMonitor);
+        UpdateRecentFiles(fileName);
+      }
     }
 
     private void CreateTab(string fileName, LogFileViewModel logFileViewModel) {

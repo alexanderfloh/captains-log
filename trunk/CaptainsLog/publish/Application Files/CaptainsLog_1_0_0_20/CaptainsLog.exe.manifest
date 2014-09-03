@@ -1,0 +1,76 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<asmv1:assembly xsi:schemaLocation="urn:schemas-microsoft-com:asm.v1 assembly.adaptive.xsd" manifestVersion="1.0" xmlns:asmv1="urn:schemas-microsoft-com:asm.v1" xmlns="urn:schemas-microsoft-com:asm.v2" xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:co.v1="urn:schemas-microsoft-com:clickonce.v1" xmlns:asmv3="urn:schemas-microsoft-com:asm.v3" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#" xmlns:co.v2="urn:schemas-microsoft-com:clickonce.v2">
+  <asmv1:assemblyIdentity name="CaptainsLog.exe" version="1.0.0.20" publicKeyToken="d08e5a0de43bf0f8" language="neutral" processorArchitecture="msil" type="win32" />
+  <description asmv2:iconFile="logomat-icon.ico" xmlns="urn:schemas-microsoft-com:asm.v1" />
+  <application />
+  <entryPoint>
+    <assemblyIdentity name="CaptainsLog" version="1.0.0.13546" publicKeyToken="D08E5A0DE43BF0F8" language="neutral" processorArchitecture="msil" />
+    <commandLine file="CaptainsLog.exe" parameters="" />
+  </entryPoint>
+  <trustInfo>
+    <security>
+      <applicationRequestMinimum>
+        <PermissionSet Unrestricted="true" ID="Custom" SameSite="site" />
+        <defaultAssemblyRequest permissionSetReference="Custom" />
+      </applicationRequestMinimum>
+      <requestedPrivileges xmlns="urn:schemas-microsoft-com:asm.v3">
+        <!--
+          UAC Manifest Options
+          If you want to change the Windows User Account Control level replace the 
+          requestedExecutionLevel node with one of the following.
+
+        <requestedExecutionLevel  level="asInvoker" uiAccess="false" />
+        <requestedExecutionLevel  level="requireAdministrator" uiAccess="false" />
+        <requestedExecutionLevel  level="highestAvailable" uiAccess="false" />
+
+         If you want to utilize File and Registry Virtualization for backward 
+         compatibility then delete the requestedExecutionLevel node.
+    -->
+        <requestedExecutionLevel level="asInvoker" uiAccess="false" />
+      </requestedPrivileges>
+    </security>
+  </trustInfo>
+  <dependency>
+    <dependentOS>
+      <osVersionInfo>
+        <os majorVersion="5" minorVersion="1" buildNumber="2600" servicePackMajor="0" />
+      </osVersionInfo>
+    </dependentOS>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="preRequisite" allowDelayedBinding="true">
+      <assemblyIdentity name="Microsoft.Windows.CommonLanguageRuntime" version="4.0.30319.0" />
+    </dependentAssembly>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="CaptainsLog.exe" size="189952">
+      <assemblyIdentity name="CaptainsLog" version="1.0.0.13546" publicKeyToken="D08E5A0DE43BF0F8" language="neutral" processorArchitecture="msil" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+        <dsig:DigestValue>l042PaFCPdqDx6/ydP79S9iMr0I=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <file name="CaptainsLog.exe.config" size="356">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+      <dsig:DigestValue>gA1dklVWCs6BC34X69LzAJeZgPI=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="logomat-icon.ico" size="67646">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+      <dsig:DigestValue>jH+xehFvogdXnA+gXT3ko9tSz9s=</dsig:DigestValue>
+    </hash>
+  </file>
+  <fileAssociation extension=".clog" description="Captain's Log File" progid="1" defaultIcon="logomat-icon.ico" xmlns="urn:schemas-microsoft-com:clickonce.v1" />
+<publisherIdentity name="CN=CORPDOM\ulrichk" issuerKeyHash="17a0a63aa0953a462d7acba37ff0a2711bc7d78f" /><Signature Id="StrongNameSignature" xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1" /><Reference URI=""><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" /><Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" /><DigestValue>FIYHE0fZcbAHlcLLWwYDwD83sFw=</DigestValue></Reference></SignedInfo><SignatureValue>AkS85pat66aAfaEtn4YRROcfZkedKxtUpCIIfLyyX8Oa3aAROSCgwM1OpzE6jhgRdEhHeKna6rnNAzB4awxxRFL/DPc2DsxIniOr1zQolJbc7KXuBYWHDUPzCFLqp+pb+P4Naw4wt7wmzqLOLHhKMFmtS7xO1dh/Ke6PZ4ddYlg=</SignatureValue><KeyInfo Id="StrongNameKeyInfo"><KeyValue><RSAKeyValue><Modulus>p4cR4QSev9BHxTyXbnL83CHkvT0tcZQU58RTj3UE4JWMJlXHkQCqt2ksT6iGyaVHzydmMnnd8Qk/MUq30otdxR2DQVWu/Eg0BzS5LhcxaN2m/LuNxD9RJ2LDSfXPuJwMt5Lq+KdYFmSkS1/o9K3ejiemzWX6Czdbe4+emlxl42E=</Modulus><Exponent>AQAB</Exponent></RSAKeyValue></KeyValue><msrel:RelData xmlns:msrel="http://schemas.microsoft.com/windows/rel/2005/reldata"><r:license xmlns:r="urn:mpeg:mpeg21:2003:01-REL-R-NS" xmlns:as="http://schemas.microsoft.com/windows/pki/2005/Authenticode"><r:grant><as:ManifestInformation Hash="5cb0373fc003065bcbc29507b071d94713078614" Description="" Url=""><as:assemblyIdentity name="CaptainsLog.exe" version="1.0.0.20" publicKeyToken="d08e5a0de43bf0f8" language="neutral" processorArchitecture="msil" type="win32" /></as:ManifestInformation><as:SignedBy /><as:AuthenticodePublisher><as:X509SubjectName>CN=CORPDOM\ulrichk</as:X509SubjectName></as:AuthenticodePublisher></r:grant><r:issuer><Signature Id="AuthenticodeSignature" xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1" /><Reference URI=""><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" /><Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" /><DigestValue>04kJw0I2ztmllm4IEHNJOVFCm6U=</DigestValue></Reference></SignedInfo><SignatureValue>RKK4fm68HGJ2r3kqjRsRKeo2gT41O1w6e20Colq05GT/G20GxPC2PUMWlXDmFpvChfGv7+gzGx6GMxKR84LhHvK7ZaYeDBjBr92cluaJp5wLDewIowSMrbnoq2fBjPjk8Jk69PHhvttMvTzu0UDzafMxN+1pQ8DgNVXUciwUYCU=</SignatureValue><KeyInfo><KeyValue><RSAKeyValue><Modulus>p4cR4QSev9BHxTyXbnL83CHkvT0tcZQU58RTj3UE4JWMJlXHkQCqt2ksT6iGyaVHzydmMnnd8Qk/MUq30otdxR2DQVWu/Eg0BzS5LhcxaN2m/LuNxD9RJ2LDSfXPuJwMt5Lq+KdYFmSkS1/o9K3ejiemzWX6Czdbe4+emlxl42E=</Modulus><Exponent>AQAB</Exponent></RSAKeyValue></KeyValue><X509Data><X509Certificate>MIIB1TCCAT6gAwIBAgIQUgKWvELEh69ElvfoHK46/zANBgkqhkiG9w0BAQUFADApMScwJQYDVQQDHh4AQwBPAFIAUABEAE8ATQBcAHUAbAByAGkAYwBoAGswHhcNMTQwOTAxMTMyNTMxWhcNMTUwOTAxMTkyNTMxWjApMScwJQYDVQQDHh4AQwBPAFIAUABEAE8ATQBcAHUAbAByAGkAYwBoAGswgZ8wDQYJKoZIhvcNAQEBBQADgY0AMIGJAoGBAKeHEeEEnr/QR8U8l25y/Nwh5L09LXGUFOfEU491BOCVjCZVx5EAqrdpLE+ohsmlR88nZjJ53fEJPzFKt9KLXcUdg0FVrvxINAc0uS4XMWjdpvy7jcQ/USdiw0n1z7icDLeS6vinWBZkpEtf6PSt3o4nps1l+gs3W3uPnppcZeNhAgMBAAEwDQYJKoZIhvcNAQEFBQADgYEAREUxBjoIB5YfMEysl0NnYxnPU6Q0WoqDUzk0Z0vQ7+jthOLhYLRGRcChX+r9dDkfyKJ83YJ3Xq2VXG7GayFaoiJ4TsvzH90y5lfOrWOCjU3MfayTXn9NB+0ok3rrplukiiYXWB2xCQXYWERsxPKe/+OktR3W9EMLaDKzaB5ipZA=</X509Certificate></X509Data></KeyInfo></Signature></r:issuer></r:license></msrel:RelData></KeyInfo></Signature></asmv1:assembly>
