@@ -211,7 +211,7 @@
     <Resource Include="Images\page_copy.png" />
   </ItemGroup>
   <ItemGroup>
-    <FileAssociation Include=".clog">
+    <FileAssociation Include=".xmllog">
       <Visible>False</Visible>
       <Description>Captain%27s Log File</Description>
       <Progid>1</Progid>
