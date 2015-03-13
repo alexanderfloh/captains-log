@@ -1,4 +1,4 @@
-﻿using System;
+ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,6 +19,7 @@ namespace CaptainsLog {
   public partial class WelcomeTab : UserControl {
     public WelcomeTab() {
       InitializeComponent();
+      
     }
   }
 }
