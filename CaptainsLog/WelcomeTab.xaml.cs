@@ -19,7 +19,6 @@ namespace CaptainsLog {
   public partial class WelcomeTab : UserControl {
     public WelcomeTab() {
       InitializeComponent();
-      
     }
   }
 }
