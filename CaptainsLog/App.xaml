@@ -11,9 +11,9 @@
             <GradientStop Color="#FF828282" Offset="0.244" />
         </LinearGradientBrush>
 
-        <SolidColorBrush x:Key="lightGreen" Color="#FF80E50A" />
-        <SolidColorBrush x:Key="mediumGreen" Color="#FF5CA507" />
-        <SolidColorBrush x:Key="darkGreen" Color="#FF396504" />
+        <SolidColorBrush x:Key="lightGreen" Color="#E57373" />
+        <SolidColorBrush x:Key="mediumGreen" Color="#F44336" />
+        <SolidColorBrush x:Key="darkGreen" Color="#B71C1C" />
 
         <SolidColorBrush x:Key="LightGrey" Color="#77AAAAAA" />
 

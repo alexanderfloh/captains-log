@@ -133,7 +133,7 @@ namespace CaptainsLog {
     }
 
     private void OnIssueUrlClick(object sender, RoutedEventArgs e) {
-      Process.Start("http://code.google.com/p/captains-log/issues/list");
+      Process.Start("https://github.com/alexanderfloh/captains-log/issues");
     }
 
     private void CloseCommandExecuted(object sender, ExecutedRoutedEventArgs e) {

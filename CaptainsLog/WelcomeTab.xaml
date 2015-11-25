@@ -46,14 +46,7 @@
                 <Expander.Header>
                     <DockPanel>
                         <TextBlock Text="Recent Files" DockPanel.Dock="Top" />
-                        <Line DockPanel.Dock="Bottom" X2="500">
-                            <Line.Stroke>
-                                <LinearGradientBrush>
-                                    <GradientStop Color="#CC80E50A" Offset="0.1" />
-                                    <GradientStop Color="Transparent" Offset="1.5" />
-                                </LinearGradientBrush>
-                            </Line.Stroke>
-                        </Line>
+                        <Line DockPanel.Dock="Bottom" X2="500" Stroke="{StaticResource mediumGreen}" />
                     </DockPanel>
                 </Expander.Header>
                 <ListBox ItemTemplate="{StaticResource RecentFilesItem}" Name="LBRecentFiles" MinHeight="50" BorderBrush="{x:Null}" Background="{x:Null}"></ListBox>
@@ -65,15 +58,7 @@
                         <TextBlock Text="Getting Started" DockPanel.Dock="Top">
                         </TextBlock>
 
-                        <Line DockPanel.Dock="Bottom" X2="500">
-                            <Line.Stroke>
-                                <LinearGradientBrush>
-                                    <GradientStop Color="#CC80E50A" Offset="0.1" />
-                                    <GradientStop Color="Transparent" Offset="1.5" />
-                                </LinearGradientBrush>
-                            </Line.Stroke>
-                        </Line>
-
+                        <Line DockPanel.Dock="Bottom" X2="500" Stroke="{StaticResource mediumGreen}" />
                     </DockPanel>
                 </Expander.Header>
                 <TextBlock TextWrapping="WrapWithOverflow">To display log files, drop them on the application.</TextBlock>
